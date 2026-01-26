@@ -7,6 +7,7 @@ import Tasks from './pages/Tasks';
 import Inventory from './pages/Inventory';
 import Monitoring from './pages/Monitoring';
 import Assets from './pages/Assets';
+import SiteAssets from './pages/SiteAssets';
 import Placeholder from './pages/Placeholder';
 import EngineerLayout from './components/EngineerLayout';
 import EngineerDashboard from './pages/engineer/Dashboard';
@@ -25,6 +26,7 @@ function App() {
           <Route path="/inventory" element={<Inventory />} />
           <Route path="/monitoring" element={<Monitoring />} />
           <Route path="/assets" element={<Assets />} />
+          <Route path="/site-assets" element={<SiteAssets />} />
 
           {/* New Routes Mapped to Placeholder */}
           <Route path="/labour" element={<Placeholder title="Labour Management" icon="fas fa-users" />} />
@@ -48,7 +50,7 @@ function App() {
           <Route path="updates" element={<Placeholder title="Daily Progress Update" icon="fas fa-edit" />} />
           <Route path="photos" element={<Placeholder title="Upload Site Photos" icon="fas fa-camera" />} />
           <Route path="attendance" element={<Placeholder title="Labour Attendance" icon="fas fa-user-clock" />} />
-          <Route path="assets" element={<Assets />} />
+          <Route path="assets" element={<SiteAssets />} />
           <Route path="stock" element={<Inventory />} />
           <Route path="tickets" element={<Placeholder title="Issue Tickets" icon="fas fa-exclamation-circle" />} />
           <Route path="documents" element={<Placeholder title="Site Documents" icon="fas fa-file-alt" />} />

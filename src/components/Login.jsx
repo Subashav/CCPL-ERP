@@ -6,29 +6,46 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const handleLogin = (u, p) => {
-        // Simulate login
-        console.log('Login attempt:', { username: u, password: p });
-        const role = u.includes('engineer') ? 'engineer' : 'superadmin';
+    const handleLoginUser = (userProfile) => {
+        // Simulate login and store full profile
+        sessionStorage.setItem('currentUser', JSON.stringify(userProfile));
 
-        sessionStorage.setItem('currentUser', JSON.stringify({ username: u, role: role }));
-
-        if (role === 'engineer') {
+        // Redirect based on role
+        if (userProfile.role === 'engineer') {
             navigate('/engineer/dashboard');
         } else {
             navigate('/dashboard');
         }
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        handleLogin(username, password);
+    const handleDemoLogin = (role) => {
+        let profile = {};
+        if (role === 'superadmin') {
+            profile = { name: 'John Smith', role: 'superadmin', roleName: 'Super Admin', avatar: 'JS' };
+        } else if (role === 'admin') {
+            profile = { name: 'Sarah Johnson', role: 'admin', roleName: 'Project Manager', avatar: 'SJ' };
+        } else {
+            profile = { name: 'David Lee', role: 'engineer', roleName: 'Site Engineer', avatar: 'DL' };
+        }
+
+        // Simulate form fill
+        setUsername(profile.name);
+        setPassword('demo123');
+
+        // Login
+        handleLoginUser(profile);
     };
 
-    const handleDemoLogin = (role) => {
-        setUsername(role);
-        setPassword('demo123');
-        handleLogin(role, 'demo123');
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Default fallback if typed manually
+        // Check if username implies engineer for manual entry fallback
+        const role = username.toLowerCase().includes('engineer') ? 'engineer' : 'superadmin';
+        const profile = role === 'engineer'
+            ? { name: 'David Lee', role: 'engineer', roleName: 'Site Engineer', avatar: 'DL' }
+            : { name: 'John Smith', role: 'superadmin', roleName: 'Super Admin', avatar: 'JS' };
+
+        handleLoginUser(profile);
     };
 
     return (
@@ -36,66 +53,36 @@ const Login = () => {
             <div className="login-container">
                 <div className="login-card">
                     <div className="logo-section">
-                        <h1>
-                            <i className="fas fa-hard-hat"></i> CCPL Construction ERP
-                        </h1>
+                        <h1><i className="fas fa-hard-hat"></i> CCPL Construction ERP</h1>
                         <p>Enterprise Resource Planning for Construction</p>
                     </div>
 
                     <form onSubmit={handleSubmit} className="login-form">
                         <div className="form-group">
                             <label htmlFor="username">Username</label>
-                            <input
-                                type="text"
-                                id="username"
-                                name="username"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
-                                required
-                            />
-                            <small className="help-text">Demo users: superadmin, admin, engineer</small>
+                            <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} required />
+                            <small className="help-text">Select a demo account below</small>
                         </div>
-
                         <div className="form-group">
                             <label htmlFor="password">Password</label>
-                            <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            />
+                            <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                             <small className="help-text">Password: demo123</small>
                         </div>
-
                         <button type="submit" className="btn btn-primary btn-full">
                             <i className="fas fa-sign-in-alt"></i> Login
                         </button>
 
                         <div className="demo-accounts">
-                            <h4>Demo Accounts</h4>
-                            <div className="demo-options">
-                                <button
-                                    type="button"
-                                    className="btn btn-outline demo-login"
-                                    onClick={() => handleDemoLogin('superadmin')}
-                                >
-                                    <i className="fas fa-crown"></i> Super Admin
+                            <h4><i className="fas fa-id-badge text-gray-400"></i> Demo Access</h4>
+                            <div className="demo-options flex flex-col gap-2">
+                                <button type="button" className="btn btn-outline flex items-center justify-center gap-2 w-full hover:bg-purple-50 hover:text-purple-700 hover:border-purple-200" onClick={() => handleDemoLogin('superadmin')}>
+                                    <i className="fas fa-crown"></i> Login as Super Admin (Owner)
                                 </button>
-                                <button
-                                    type="button"
-                                    className="btn btn-outline demo-login"
-                                    onClick={() => handleDemoLogin('admin')}
-                                >
-                                    <i className="fas fa-user-tie"></i> Admin
+                                <button type="button" className="btn btn-outline flex items-center justify-center gap-2 w-full hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200" onClick={() => handleDemoLogin('admin')}>
+                                    <i className="fas fa-user-tie"></i> Login as Admin (Project Manager)
                                 </button>
-                                <button
-                                    type="button"
-                                    className="btn btn-outline demo-login"
-                                    onClick={() => handleDemoLogin('engineer')}
-                                >
-                                    <i className="fas fa-hard-hat"></i> Site Engineer
+                                <button type="button" className="btn btn-outline flex items-center justify-center gap-2 w-full hover:bg-green-50 hover:text-green-700 hover:border-green-200" onClick={() => handleDemoLogin('engineer')}>
+                                    <i className="fas fa-hard-hat"></i> Login as Site Engineer
                                 </button>
                             </div>
                         </div>

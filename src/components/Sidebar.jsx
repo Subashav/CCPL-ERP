@@ -1,39 +1,56 @@
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
-const Sidebar = ({ collapsed, role = 'admin' }) => {
+const Sidebar = ({ collapsed }) => {
     const navigate = useNavigate();
     const location = useLocation();
+    const [role, setRole] = useState('superadmin');
 
+    useEffect(() => {
+        const storedUser = sessionStorage.getItem('currentUser');
+        if (storedUser) {
+            setRole(JSON.parse(storedUser).role);
+        }
+    }, []);
+
+    // 1. Menu Items for Admins (Super Admin & Project Manager)
+    // We use the 'roles' property to further filter between Super Admin and PM
     const adminItems = [
         { header: 'CORE MODULES' },
         { name: 'Dashboard', path: '/dashboard', icon: 'fas fa-tachometer-alt' },
         { name: 'Projects', path: '/projects', icon: 'fas fa-project-diagram' },
         { name: 'Task Management', path: '/tasks', icon: 'fas fa-tasks' },
-        { name: 'Site Monitoring', path: '/monitoring', icon: 'fas fa-eye' },
+        { name: 'Daily Site Logs', path: '/monitoring', icon: 'fas fa-clipboard-list' }, // Renamed from Site Monitoring
 
         { header: 'RESOURCES' },
         { name: 'Assets', path: '/assets', icon: 'fas fa-tools' },
         { name: 'My Site Assets', path: '/site-assets', icon: 'fas fa-clipboard-list' },
         { name: 'Materials & Stock', path: '/inventory', icon: 'fas fa-boxes' },
         { name: 'Labour Management', path: '/labour', icon: 'fas fa-users' },
+        { name: 'Asset Management', path: '/assets', icon: 'fas fa-tools', roles: ['superadmin', 'admin'] },
+        { name: 'Inventory', path: '/inventory', icon: 'fas fa-boxes' },
 
-        { header: 'OPERATIONS' },
-        { name: 'Procurement', path: '/procurement', icon: 'fas fa-shopping-cart' },
-        { name: 'Vendors', path: '/vendors', icon: 'fas fa-handshake' },
-        { name: 'Finance & Billing', path: '/billing', icon: 'fas fa-file-invoice-dollar' },
-        { name: 'Expenses', path: '/expenses', icon: 'fas fa-receipt' },
+        { header: 'OPERATIONS', roles: ['superadmin', 'admin'] },
+        { name: 'Procurement', path: '/procurement', icon: 'fas fa-shopping-cart', roles: ['superadmin', 'admin'] },
+        { name: 'Vendors', path: '/vendors', icon: 'fas fa-handshake', roles: ['superadmin', 'admin'] },
+
+        // Finance section (from teammate)
+        { name: 'Finance & Billing', path: '/billing', icon: 'fas fa-file-invoice-dollar', roles: ['superadmin'] },
+        { name: 'Expenses', path: '/expenses', icon: 'fas fa-receipt', roles: ['superadmin'] },
+
 
         { header: 'SUPPORT' },
         { name: 'Issue Tickets', path: '/tickets', icon: 'fas fa-ticket-alt' },
-        { name: 'Reports', path: '/reports', icon: 'fas fa-chart-bar' },
+        { name: 'Reports', path: '/reports', icon: 'fas fa-chart-bar', roles: ['superadmin', 'admin'] },
         { name: 'Documents', path: '/documents', icon: 'fas fa-folder' },
 
-        { header: 'ADMINISTRATION' },
-        { name: 'User Management', path: '/users', icon: 'fas fa-users-cog' },
-        { name: 'Notifications', path: '/notifications', icon: 'fas fa-bell' },
-        { name: 'Settings', path: '/settings', icon: 'fas fa-cog' },
+        { header: 'ADMINISTRATION', roles: ['superadmin'] },
+        { name: 'User Management', path: '/users', icon: 'fas fa-users-cog', roles: ['superadmin'] },
+        { name: 'Notifications', path: '/notifications', icon: 'fas fa-bell', roles: ['superadmin'] },
+        { name: 'Settings', path: '/settings', icon: 'fas fa-cog', roles: ['superadmin'] },
     ];
 
+    // 2. Dedicated Menu for Site Engineers (Field View)
     const siteManagerItems = [
         { header: 'SITE EXECUTION' },
         { name: 'My Dashboard', path: '/engineer/dashboard', icon: 'fas fa-home' },
@@ -53,7 +70,17 @@ const Sidebar = ({ collapsed, role = 'admin' }) => {
         { name: 'Notifications', path: '/engineer/notifications', icon: 'fas fa-bell' },
     ];
 
-    const menuItems = role === 'engineer' ? siteManagerItems : adminItems;
+    // Select the correct menu set
+    let activeMenuItems = [];
+    if (role === 'engineer') {
+        activeMenuItems = siteManagerItems;
+    } else {
+        // Filter admin items based on specific role (superadmin vs admin)
+        activeMenuItems = adminItems.filter(item => {
+            if (!item.roles) return true;
+            return item.roles.includes(role);
+        });
+    }
 
     return (
         <aside className={`sidebar ${collapsed ? 'collapsed' : ''}`}>
@@ -65,7 +92,7 @@ const Sidebar = ({ collapsed, role = 'admin' }) => {
             </div>
 
             <nav className="sidebar-nav">
-                {menuItems.map((item, index) => {
+                {activeMenuItems.map((item, index) => {
                     if (item.header) {
                         return (
                             <div key={index} className="nav-section-title mt-4 mb-2">
@@ -74,7 +101,7 @@ const Sidebar = ({ collapsed, role = 'admin' }) => {
                         );
                     }
 
-                    const isActive = location.pathname === item.path;
+                    const isActive = location.pathname === item.path || location.pathname.startsWith(item.path);
                     return (
                         <button
                             key={index}
