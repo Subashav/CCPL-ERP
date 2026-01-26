@@ -119,33 +119,33 @@ const Projects = () => {
     return (
         <>
             {/* (Keeping existing Header & Table code identical to previous version...) */}
-            <div className="modern-page-header bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-8 rounded-xl shadow-lg mb-8 relative overflow-hidden">
+            <div className="modern-page-header bg-slate-800 text-white p-8 rounded-xl shadow-lg mb-8 relative overflow-hidden">
                 <div className="header-content relative z-10">
                     <div className="flex justify-between items-center mb-6">
                         <div className="flex items-center gap-4">
-                            <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-lg flex items-center justify-center text-3xl border border-white/10">
+                            <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-lg flex items-center justify-center text-3xl border border-white/10">
                                 <i className="fas fa-building-columns"></i>
                             </div>
                             <div>
                                 <h1 className="text-3xl font-bold mb-1">
                                     {isEngineer ? 'My Assigned Projects' : 'Project Hub'}
                                 </h1>
-                                <p className="text-lg opacity-90">
+                                <p className="text-lg opacity-80">
                                     {isEngineer ? 'Projects assigned to you for execution' : 'Comprehensive Construction Project Management Center'}
                                 </p>
                             </div>
                         </div>
                         <div className="flex gap-3">
-                            <button className="btn bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20">
+                            <button className="btn bg-white/5 backdrop-blur-sm border border-white/20 text-white hover:bg-white/10">
                                 <i className="fas fa-download"></i>
                                 <span>Export Data</span>
                             </button>
                             {!isEngineer && (
                                 <button
                                     onClick={() => setShowModal(true)}
-                                    className="btn bg-gradient-to-r from-pink-500 to-teal-400 text-white hover:shadow-lg transform hover:-translate-y-0.5 transition-all border-none"
+                                    className="btn bg-[#F5F5F5] text-slate-900 hover:bg-white hover:shadow-lg transform hover:-translate-y-0.5 transition-all border-none font-bold"
                                 >
-                                    <i className="fas fa-plus-circle"></i>
+                                    <i className="fas fa-plus-circle text-slate-800"></i>
                                     <span>Create New Project</span>
                                 </button>
                             )}
