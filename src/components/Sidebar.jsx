@@ -31,19 +31,19 @@ const Sidebar = ({ collapsed }) => {
         { name: 'Daily Site Logs', path: '/monitoring', icon: 'fas fa-clipboard-list' },
 
         { header: 'RESOURCES' },
-{ 
-  name: 'Assets', 
-  path: '/assets', 
-  icon: 'fas fa-tools', 
-  roles: ['superadmin', 'admin'] 
-},
-{ 
-  name: 'Asset Requests', 
-  path: '/admin/asset-requests', 
-  icon: 'fas fa-bell-concierge', 
-  roles: ['superadmin', 'admin'], 
-  showBadge: true 
-},
+        {
+            name: 'Assets',
+            path: '/assets',
+            icon: 'fas fa-tools',
+            roles: ['superadmin', 'admin']
+        },
+        {
+            name: 'Asset Requests',
+            path: '/admin/asset-requests',
+            icon: 'fas fa-bell-concierge',
+            roles: ['superadmin', 'admin'],
+            showBadge: true
+        },
 
         { name: 'Materials & Stock', path: '/inventory', icon: 'fas fa-boxes' },
         { name: 'Labour Management', path: '/labour', icon: 'fas fa-users' },
@@ -71,6 +71,7 @@ const Sidebar = ({ collapsed }) => {
         { name: 'My Projects', path: '/engineer/projects', icon: 'fas fa-hard-hat' },
         { name: 'My Tasks', path: '/engineer/tasks', icon: 'fas fa-clipboard-list' },
         { name: 'Total Assets Provided', path: '/engineer/assets-provided', icon: 'fas fa-truck-loading' },
+        { name: 'Manpower Onboarding', path: '/engineer/manpower', icon: 'fas fa-user-plus' },
 
         { header: 'DAILY UPDATES' },
         { name: 'Daily Task Update', path: '/engineer/updates', icon: 'fas fa-edit' },
