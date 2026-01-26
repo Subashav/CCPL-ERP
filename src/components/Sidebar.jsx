@@ -13,6 +13,7 @@ const Sidebar = ({ collapsed, role = 'admin' }) => {
 
         { header: 'RESOURCES' },
         { name: 'Assets', path: '/assets', icon: 'fas fa-tools' },
+        { name: 'My Site Assets', path: '/site-assets', icon: 'fas fa-clipboard-list' },
         { name: 'Materials & Stock', path: '/inventory', icon: 'fas fa-boxes' },
         { name: 'Labour Management', path: '/labour', icon: 'fas fa-users' },
 
