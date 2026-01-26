@@ -1,6 +1,8 @@
-import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const EngineerDashboard = () => {
+    const navigate = useNavigate();
+
     return (
         <div className="animate-in fade-in">
             <div className="mb-8 flex justify-between items-end">
@@ -64,7 +66,10 @@ const EngineerDashboard = () => {
             {/* Quick Actions Grid */}
             <h2 className="text-xl font-bold text-gray-800 mb-4">Quick Actions</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <button className="flex items-center gap-4 p-5 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl text-white shadow-lg hover:shadow-xl hover:translate-y-[-2px] transition-all group">
+                <button
+                    onClick={() => navigate('/engineer/updates')}
+                    className="flex items-center gap-4 p-5 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl text-white shadow-lg hover:shadow-xl hover:translate-y-[-2px] transition-all group"
+                >
                     <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center text-2xl group-hover:bg-white/30 transition-colors">
                         <i className="fas fa-edit"></i>
                     </div>
@@ -74,7 +79,10 @@ const EngineerDashboard = () => {
                     </div>
                 </button>
 
-                <button className="flex items-center gap-4 p-5 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl text-white shadow-lg hover:shadow-xl hover:translate-y-[-2px] transition-all group">
+                <button
+                    onClick={() => navigate('/engineer/photos')}
+                    className="flex items-center gap-4 p-5 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl text-white shadow-lg hover:shadow-xl hover:translate-y-[-2px] transition-all group"
+                >
                     <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center text-2xl group-hover:bg-white/30 transition-colors">
                         <i className="fas fa-camera"></i>
                     </div>

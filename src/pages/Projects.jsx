@@ -3,17 +3,36 @@ import { useState } from 'react';
 const Projects = () => {
     const [showModal, setShowModal] = useState(false);
     const [activeTab, setActiveTab] = useState('basic');
+    const [currentUser, setCurrentUser] = useState(JSON.parse(sessionStorage.getItem('currentUser') || '{}'));
+    const isEngineer = currentUser.role === 'engineer';
+
     const [projects, setProjects] = useState([
         {
             id: 'PRJ001',
             name: 'Skyline Residential Complex',
             manager: 'Sarah Johnson',
+            siteEngineer: 'David Lee',
             status: 'active',
             progress: 78,
             budget: '₹5,200,000',
             dueDate: '2026-08-15'
+        },
+        {
+            id: 'PRJ002',
+            name: 'City Center Mall',
+            manager: 'Sarah Johnson',
+            siteEngineer: 'Mike Wilson',
+            status: 'planning',
+            progress: 15,
+            budget: '₹12,500,000',
+            dueDate: '2027-03-01'
         }
     ]);
+
+    // Use filtered projects for display
+    const displayedProjects = isEngineer
+        ? projects.filter(p => p.siteEngineer === currentUser.name)
+        : projects;
 
     // --- Form States ---
     const [basicInfo, setBasicInfo] = useState({
@@ -72,6 +91,7 @@ const Projects = () => {
             id: basicInfo.id,
             name: basicInfo.name,
             manager: basicInfo.manager,
+            siteEngineer: basicInfo.siteEngineer,
             status: basicInfo.status === 'Planning Phase' ? 'planning' : 'active',
             progress: 0,
             budget: `₹${timeline.totalBudget}`,
@@ -87,8 +107,8 @@ const Projects = () => {
             type="button"
             onClick={() => setActiveTab(id)}
             className={`flex items-center gap-2 px-4 py-3 border-b-2 transition-colors text-sm font-medium ${activeTab === id
-                    ? 'border-blue-600 text-blue-600 bg-blue-50'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+                ? 'border-blue-600 text-blue-600 bg-blue-50'
+                : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
                 }`}
         >
             <i className={icon}></i>
@@ -99,30 +119,36 @@ const Projects = () => {
     return (
         <>
             {/* (Keeping existing Header & Table code identical to previous version...) */}
-            <div className="modern-page-header bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-8 rounded-xl shadow-lg mb-8 relative overflow-hidden">
+            <div className="modern-page-header bg-slate-800 text-white p-8 rounded-xl shadow-lg mb-8 relative overflow-hidden">
                 <div className="header-content relative z-10">
                     <div className="flex justify-between items-center mb-6">
                         <div className="flex items-center gap-4">
-                            <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-lg flex items-center justify-center text-3xl border border-white/10">
+                            <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-lg flex items-center justify-center text-3xl border border-white/10">
                                 <i className="fas fa-building-columns"></i>
                             </div>
                             <div>
-                                <h1 className="text-3xl font-bold mb-1">Project Hub</h1>
-                                <p className="text-lg opacity-90">Comprehensive Construction Project Management Center</p>
+                                <h1 className="text-3xl font-bold mb-1">
+                                    {isEngineer ? 'My Assigned Projects' : 'Project Hub'}
+                                </h1>
+                                <p className="text-lg opacity-80">
+                                    {isEngineer ? 'Projects assigned to you for execution' : 'Comprehensive Construction Project Management Center'}
+                                </p>
                             </div>
                         </div>
                         <div className="flex gap-3">
-                            <button className="btn bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20">
+                            <button className="btn bg-white/5 backdrop-blur-sm border border-white/20 text-white hover:bg-white/10">
                                 <i className="fas fa-download"></i>
                                 <span>Export Data</span>
                             </button>
-                            <button
-                                onClick={() => setShowModal(true)}
-                                className="btn bg-gradient-to-r from-pink-500 to-teal-400 text-white hover:shadow-lg transform hover:-translate-y-0.5 transition-all border-none"
-                            >
-                                <i className="fas fa-plus-circle"></i>
-                                <span>Create New Project</span>
-                            </button>
+                            {!isEngineer && (
+                                <button
+                                    onClick={() => setShowModal(true)}
+                                    className="btn bg-[#F5F5F5] text-slate-900 hover:bg-white hover:shadow-lg transform hover:-translate-y-0.5 transition-all border-none font-bold"
+                                >
+                                    <i className="fas fa-plus-circle text-slate-800"></i>
+                                    <span>Create New Project</span>
+                                </button>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -148,15 +174,15 @@ const Projects = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {projects.map((project) => (
+                                {displayedProjects.map((project) => (
                                     <tr key={project.id} className="hover:bg-gray-50">
                                         <td className="font-medium text-sm">{project.id}</td>
                                         <td className="font-medium text-gray-800">{project.name}</td>
                                         <td className="text-gray-600">{project.manager}</td>
                                         <td>
                                             <span className={`badge ${project.status === 'active' ? 'badge-success' :
-                                                    project.status === 'planning' ? 'badge-primary' :
-                                                        project.status === 'on-hold' ? 'badge-warning' : 'badge-secondary'
+                                                project.status === 'planning' ? 'badge-primary' :
+                                                    project.status === 'on-hold' ? 'badge-warning' : 'badge-secondary'
                                                 }`}>
                                                 {project.status.replace('-', ' ')}
                                             </span>
@@ -166,7 +192,7 @@ const Projects = () => {
                                                 <div className="w-full bg-gray-200 rounded-full h-2">
                                                     <div
                                                         className={`h-2 rounded-full ${project.progress > 75 ? 'bg-green-500' :
-                                                                project.progress > 40 ? 'bg-blue-500' : 'bg-orange-500'
+                                                            project.progress > 40 ? 'bg-blue-500' : 'bg-orange-500'
                                                             }`}
                                                         style={{ width: `${project.progress}%` }}
                                                     ></div>

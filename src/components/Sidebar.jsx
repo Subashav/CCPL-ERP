@@ -31,8 +31,20 @@ const Sidebar = ({ collapsed }) => {
         { name: 'Daily Site Logs', path: '/monitoring', icon: 'fas fa-clipboard-list' },
 
         { header: 'RESOURCES' },
-        { name: 'Assets', path: '/assets', icon: 'fas fa-tools', roles: ['superadmin', 'admin'] },
-        { name: 'Asset Requests', path: '/admin/asset-requests', icon: 'fas fa-bell-concierge', roles: ['superadmin', 'admin'], showBadge: true },
+{ 
+  name: 'Assets', 
+  path: '/assets', 
+  icon: 'fas fa-tools', 
+  roles: ['superadmin', 'admin'] 
+},
+{ 
+  name: 'Asset Requests', 
+  path: '/admin/asset-requests', 
+  icon: 'fas fa-bell-concierge', 
+  roles: ['superadmin', 'admin'], 
+  showBadge: true 
+},
+
         { name: 'Materials & Stock', path: '/inventory', icon: 'fas fa-boxes' },
         { name: 'Labour Management', path: '/labour', icon: 'fas fa-users' },
         { name: 'Manpower Management', path: '/admin/manpower-summary', icon: 'fas fa-users-cog', roles: ['superadmin', 'admin'] },
