@@ -9,8 +9,15 @@ const Login = () => {
     const handleLogin = (u, p) => {
         // Simulate login
         console.log('Login attempt:', { username: u, password: p });
-        sessionStorage.setItem('currentUser', JSON.stringify({ username: u, role: 'superadmin' }));
-        navigate('/dashboard');
+        const role = u.includes('engineer') ? 'engineer' : 'superadmin';
+
+        sessionStorage.setItem('currentUser', JSON.stringify({ username: u, role: role }));
+
+        if (role === 'engineer') {
+            navigate('/engineer/dashboard');
+        } else {
+            navigate('/dashboard');
+        }
     };
 
     const handleSubmit = (e) => {

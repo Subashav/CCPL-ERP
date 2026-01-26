@@ -8,6 +8,8 @@ import Inventory from './pages/Inventory';
 import Monitoring from './pages/Monitoring';
 import Assets from './pages/Assets';
 import Placeholder from './pages/Placeholder';
+import EngineerLayout from './components/EngineerLayout';
+import EngineerDashboard from './pages/engineer/Dashboard';
 import './index.css';
 
 function App() {
@@ -36,6 +38,21 @@ function App() {
           <Route path="/users" element={<Placeholder title="User Management" icon="fas fa-users-cog" />} />
           <Route path="/notifications" element={<Placeholder title="Notifications" icon="fas fa-bell" />} />
           <Route path="/settings" element={<Placeholder title="Settings" icon="fas fa-cog" />} />
+        </Route>
+
+        {/* Site Engineer / Execution Routes */}
+        <Route path="/engineer" element={<EngineerLayout />}>
+          <Route path="dashboard" element={<EngineerDashboard />} />
+          <Route path="projects" element={<Placeholder title="My Projects" icon="fas fa-hard-hat" />} />
+          <Route path="tasks" element={<Tasks />} />
+          <Route path="updates" element={<Placeholder title="Daily Progress Update" icon="fas fa-edit" />} />
+          <Route path="photos" element={<Placeholder title="Upload Site Photos" icon="fas fa-camera" />} />
+          <Route path="attendance" element={<Placeholder title="Labour Attendance" icon="fas fa-user-clock" />} />
+          <Route path="assets" element={<Assets />} />
+          <Route path="stock" element={<Inventory />} />
+          <Route path="tickets" element={<Placeholder title="Issue Tickets" icon="fas fa-exclamation-circle" />} />
+          <Route path="documents" element={<Placeholder title="Site Documents" icon="fas fa-file-alt" />} />
+          <Route path="notifications" element={<Placeholder title="Notifications" icon="fas fa-bell" />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />

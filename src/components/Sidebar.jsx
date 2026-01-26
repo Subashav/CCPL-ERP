@@ -1,10 +1,10 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 
-const Sidebar = ({ collapsed }) => {
+const Sidebar = ({ collapsed, role = 'admin' }) => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const menuItems = [
+    const adminItems = [
         { header: 'CORE MODULES' },
         { name: 'Dashboard', path: '/dashboard', icon: 'fas fa-tachometer-alt' },
         { name: 'Projects', path: '/projects', icon: 'fas fa-project-diagram' },
@@ -32,6 +32,27 @@ const Sidebar = ({ collapsed }) => {
         { name: 'Notifications', path: '/notifications', icon: 'fas fa-bell' },
         { name: 'Settings', path: '/settings', icon: 'fas fa-cog' },
     ];
+
+    const siteManagerItems = [
+        { header: 'SITE EXECUTION' },
+        { name: 'My Dashboard', path: '/engineer/dashboard', icon: 'fas fa-home' },
+        { name: 'My Projects', path: '/engineer/projects', icon: 'fas fa-hard-hat' },
+        { name: 'My Tasks', path: '/engineer/tasks', icon: 'fas fa-clipboard-list' },
+
+        { header: 'DAILY UPDATES' },
+        { name: 'Daily Task Update', path: '/engineer/updates', icon: 'fas fa-edit' },
+        { name: 'Upload Photos', path: '/engineer/photos', icon: 'fas fa-camera' },
+        { name: 'Labour Attendance', path: '/engineer/attendance', icon: 'fas fa-user-clock' },
+        { name: 'Asset Daily Log', path: '/engineer/assets', icon: 'fas fa-truck-pickup' },
+
+        { header: 'REQUESTS & ISSUES' },
+        { name: 'Stock Request', path: '/engineer/stock', icon: 'fas fa-box-open' },
+        { name: 'Tickets / Issues', path: '/engineer/tickets', icon: 'fas fa-exclamation-circle' },
+        { name: 'Documents', path: '/engineer/documents', icon: 'fas fa-file-alt' },
+        { name: 'Notifications', path: '/engineer/notifications', icon: 'fas fa-bell' },
+    ];
+
+    const menuItems = role === 'engineer' ? siteManagerItems : adminItems;
 
     return (
         <aside className={`sidebar ${collapsed ? 'collapsed' : ''}`}>

@@ -65,6 +65,9 @@ const Inventory = () => {
         setShowRequestModal(false);
     };
 
+    const currentUser = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
+    const isEngineer = currentUser.role === 'engineer';
+
     return (
         <>
             <div className="page-header flex justify-between items-center">
@@ -79,12 +82,14 @@ const Inventory = () => {
                     >
                         <i className="fas fa-file-import"></i> Request Stock
                     </button>
-                    <button
-                        onClick={() => setShowAddItemModal(true)}
-                        className="btn btn-primary"
-                    >
-                        <i className="fas fa-plus"></i> Add Item
-                    </button>
+                    {!isEngineer && (
+                        <button
+                            onClick={() => setShowAddItemModal(true)}
+                            className="btn btn-primary"
+                        >
+                            <i className="fas fa-plus"></i> Add Item
+                        </button>
+                    )}
                 </div>
             </div>
 
@@ -210,9 +215,11 @@ const Inventory = () => {
                                                 <button className="btn btn-sm btn-outline text-blue-600 border-blue-200 hover:bg-blue-50" title="View">
                                                     <i className="fas fa-eye"></i>
                                                 </button>
-                                                <button className="btn btn-sm btn-outline text-gray-600 border-gray-200 hover:bg-gray-50" title="Edit">
-                                                    <i className="fas fa-edit"></i>
-                                                </button>
+                                                {!isEngineer && (
+                                                    <button className="btn btn-sm btn-outline text-gray-600 border-gray-200 hover:bg-gray-50" title="Edit">
+                                                        <i className="fas fa-edit"></i>
+                                                    </button>
+                                                )}
                                             </div>
                                         </td>
                                     </tr>
