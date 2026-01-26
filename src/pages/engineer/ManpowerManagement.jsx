@@ -86,13 +86,13 @@ const ManpowerManagement = () => {
                 <div className="flex gap-3">
                     <button
                         onClick={() => handleOpenModal('Supervisor')}
-                        className="bg-indigo-600 text-white px-6 py-3 rounded-2xl font-black text-xs shadow-xl shadow-indigo-100 hover:bg-indigo-700 transition-all active:scale-95 flex items-center gap-2"
+                        className="bg-blue-500 text-white px-6 py-3 rounded-2xl font-black text-xs shadow-xl shadow-blue-100 hover:bg-blue-600 transition-all active:scale-95 flex items-center gap-2"
                     >
                         <i className="fas fa-user-tie"></i> + ADD SUPERVISOR
                     </button>
                     <button
                         onClick={() => handleOpenModal('Labour')}
-                        className="bg-blue-600 text-white px-6 py-3 rounded-2xl font-black text-xs shadow-xl shadow-blue-100 hover:bg-blue-700 transition-all active:scale-95 flex items-center gap-2"
+                        className="bg-blue-500 text-white px-6 py-3 rounded-2xl font-black text-xs shadow-xl shadow-blue-100 hover:bg-blue-600 transition-all active:scale-95 flex items-center gap-2"
                     >
                         <i className="fas fa-users"></i> + ADD LABOUR
                     </button>
@@ -103,13 +103,13 @@ const ManpowerManagement = () => {
             <div className="flex gap-4 mb-8">
                 <button
                     onClick={() => setActiveListTab('Supervisor')}
-                    className={`flex-1 md:flex-none px-10 py-4 rounded-[1.5rem] font-black text-xs uppercase tracking-widest transition-all ${activeListTab === 'Supervisor' ? 'bg-indigo-600 text-white shadow-2xl shadow-indigo-100 scale-105' : 'bg-white text-gray-400 border border-gray-100 hover:bg-gray-50'}`}
+                    className={`flex-1 md:flex-none px-10 py-4 rounded-[1.5rem] font-black text-xs uppercase tracking-widest transition-all ${activeListTab === 'Supervisor' ? 'bg-blue-500 text-white shadow-2xl shadow-blue-100 scale-105' : 'bg-white text-gray-400 border border-gray-100 hover:bg-gray-50'}`}
                 >
                     <i className="fas fa-user-tie mr-2"></i> Supervisors List ({supervisors.length})
                 </button>
                 <button
                     onClick={() => setActiveListTab('Labour')}
-                    className={`flex-1 md:flex-none px-10 py-4 rounded-[1.5rem] font-black text-xs uppercase tracking-widest transition-all ${activeListTab === 'Labour' ? 'bg-blue-600 text-white shadow-2xl shadow-blue-100 scale-105' : 'bg-white text-gray-400 border border-gray-100 hover:bg-gray-50'}`}
+                    className={`flex-1 md:flex-none px-10 py-4 rounded-[1.5rem] font-black text-xs uppercase tracking-widest transition-all ${activeListTab === 'Labour' ? 'bg-blue-500 text-white shadow-2xl shadow-blue-100 scale-105' : 'bg-white text-gray-400 border border-gray-100 hover:bg-gray-50'}`}
                 >
                     <i className="fas fa-users mr-2"></i> Labours List ({labours.length})
                 </button>
@@ -118,7 +118,7 @@ const ManpowerManagement = () => {
             {/* Individual Lists Display */}
             <div className={`bg-white rounded-[2.5rem] border-2 shadow-2xl overflow-hidden transition-all duration-300 ${activeListTab === 'Supervisor' ? 'border-indigo-100 shadow-indigo-50/50' : 'border-blue-100 shadow-blue-50/50'}`}>
                 <div className="p-8 border-b border-gray-50 flex justify-between items-center">
-                    <h2 className={`text-xl font-black uppercase tracking-widest ${activeListTab === 'Supervisor' ? 'text-indigo-600' : 'text-blue-600'}`}>
+                    <h2 className="text-xl font-black uppercase tracking-widest text-blue-500">
                         {activeListTab}s Directory
                     </h2>
                     <span className="bg-gray-100 text-gray-500 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter">
@@ -128,7 +128,7 @@ const ManpowerManagement = () => {
 
                 <div className="overflow-x-auto">
                     <table className="w-full text-left">
-                        <thead className={activeListTab === 'Supervisor' ? 'bg-indigo-900 text-white' : 'bg-blue-900 text-white'}>
+                        <thead className="bg-blue-900 text-white">
                             <tr>
                                 <th className="px-8 py-5 text-[10px] font-black uppercase tracking-widest opacity-60">Full Name</th>
                                 <th className="px-8 py-5 text-[10px] font-black uppercase tracking-widest opacity-60">Mobile</th>
@@ -144,7 +144,7 @@ const ManpowerManagement = () => {
                                 <tr key={m.id} className="hover:bg-gray-50 transition-colors">
                                     <td className="px-8 py-5">
                                         <div className="flex items-center gap-4">
-                                            <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-black text-sm ${activeListTab === 'Supervisor' ? 'bg-indigo-50 text-indigo-600' : 'bg-blue-50 text-blue-600'}`}>
+                                            <div className="w-10 h-10 rounded-xl flex items-center justify-center font-black text-sm bg-blue-50 text-blue-500">
                                                 {m.name.charAt(0)}
                                             </div>
                                             <p className="font-black text-gray-800">{m.name}</p>
@@ -166,8 +166,8 @@ const ManpowerManagement = () => {
                                         )}
                                     </td>
                                     <td className="px-8 py-5">
-                                        <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest ${m.status === 'Approved' ? 'bg-green-100 text-green-700' :
-                                            m.status === 'Rejected' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'
+                                        <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest ${m.status === 'Approved' ? 'bg-blue-100 text-blue-700' :
+                                            m.status === 'Rejected' ? 'bg-gray-100 text-gray-700' : 'bg-blue-50 text-blue-500'
                                             }`}>
                                             {m.status}
                                         </span>
@@ -194,7 +194,7 @@ const ManpowerManagement = () => {
                 <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
                     <div className="absolute inset-0 bg-gray-900/60 backdrop-blur-md animate-in fade-in" onClick={() => setIsModalOpen(false)}></div>
                     <div className="bg-white rounded-[2.5rem] shadow-2xl w-full max-w-2xl relative z-10 animate-in zoom-in-95 overflow-hidden max-h-[90vh] flex flex-col">
-                        <div className={`p-8 text-white relative flex justify-between items-center ${modalRole === 'Supervisor' ? 'bg-indigo-600' : 'bg-blue-600'}`}>
+                        <div className="p-8 text-white relative flex justify-between items-center bg-blue-500">
                             <div>
                                 <h2 className="text-2xl font-black tracking-tight">Register {modalRole}</h2>
                                 <p className="text-white/70 text-[10px] font-black uppercase tracking-widest mt-1">Manpower Onboarding</p>
@@ -302,7 +302,7 @@ const ManpowerManagement = () => {
 
                             <div className="flex gap-4 pt-6 border-t mt-4 sticky bottom-0 bg-white">
                                 <button type="button" onClick={() => setIsModalOpen(false)} className="grow py-4 rounded-3xl font-black text-xs text-gray-400 uppercase tracking-widest hover:bg-gray-50 transition-colors">Discard</button>
-                                <button type="submit" className={`grow py-4 rounded-3xl font-black text-xs text-white shadow-2xl transition-all active:scale-95 uppercase tracking-widest ${modalRole === 'Supervisor' ? 'bg-indigo-600 shadow-indigo-100 hover:bg-indigo-700' : 'bg-blue-600 shadow-blue-100 hover:bg-blue-700'}`}>
+                                <button type="submit" className="grow py-4 rounded-3xl font-black text-xs text-white shadow-2xl transition-all active:scale-95 uppercase tracking-widest bg-blue-500 shadow-blue-100 hover:bg-blue-600">
                                     Complete Onboarding
                                 </button>
                             </div>

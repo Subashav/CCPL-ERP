@@ -137,10 +137,10 @@ const Tickets = () => {
 
     const getPriorityBadge = (p) => {
         switch (p) {
-            case 'Critical': return 'bg-red-100 text-red-700 border-red-200';
-            case 'High': return 'bg-orange-100 text-orange-700 border-orange-200';
-            case 'Medium': return 'bg-yellow-100 text-yellow-700 border-yellow-200';
-            case 'Low': return 'bg-green-100 text-green-700 border-green-200';
+            case 'Critical': return 'bg-blue-600 text-white border-blue-700';
+            case 'High': return 'bg-blue-500 text-white border-blue-600';
+            case 'Medium': return 'bg-blue-100 text-blue-700 border-blue-200';
+            case 'Low': return 'bg-blue-50 text-blue-600 border-blue-100';
             default: return 'bg-gray-100 text-gray-700';
         }
     };
@@ -149,8 +149,8 @@ const Tickets = () => {
         switch (s) {
             case 'Pending': return 'bg-gray-100 text-gray-600';
             case 'In Progress': return 'bg-blue-100 text-blue-700';
-            case 'On Hold': return 'bg-yellow-100 text-yellow-700';
-            case 'Resolved': return 'bg-green-100 text-green-700';
+            case 'On Hold': return 'bg-blue-50 text-blue-600';
+            case 'Resolved': return 'bg-blue-600 text-white';
             case 'Closed': return 'bg-gray-800 text-white';
             default: return 'bg-gray-100';
         }
@@ -170,7 +170,7 @@ const Tickets = () => {
                 {isEngineer && (
                     <button
                         onClick={() => setShowModal(true)}
-                        className="btn bg-red-600 text-white hover:bg-red-700 px-6 py-2.5 rounded-lg flex items-center gap-2 shadow-lg transition-transform hover:-translate-y-0.5"
+                        className="btn bg-blue-500 text-white hover:bg-blue-600 px-6 py-2.5 rounded-lg flex items-center gap-2 shadow-lg transition-transform hover:-translate-y-0.5"
                     >
                         <i className="fas fa-exclamation-circle"></i> Raise Ticket
                     </button>
@@ -229,7 +229,7 @@ const Tickets = () => {
                     filteredTickets.map(ticket => (
                         <div key={ticket.id} className="bg-white rounded-xl shadow-sm border border-gray-200 p-5 hover:shadow-md transition-shadow relative overflow-hidden group">
                             {/* Priority Strip */}
-                            <div className={`absolute top-0 left-0 w-1.5 h-full ${ticket.priority === 'Critical' ? 'bg-red-500' : ticket.priority === 'High' ? 'bg-orange-500' : 'bg-blue-400'}`}></div>
+                            <div className={`absolute top-0 left-0 w-1.5 h-full ${ticket.priority === 'Critical' ? 'bg-blue-700' : ticket.priority === 'High' ? 'bg-blue-500' : 'bg-blue-300'}`}></div>
 
                             <div className="flex flex-col md:flex-row gap-6 pl-3">
                                 <div className="flex-1">
@@ -368,7 +368,7 @@ const Tickets = () => {
 
                                 <div className="pt-4 flex justify-end gap-3">
                                     <button type="button" onClick={() => setShowModal(false)} className="px-5 py-2.5 border rounded-lg hover:bg-gray-50 font-medium text-sm">Cancel</button>
-                                    <button type="submit" className="px-5 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium text-sm shadow-md">Submit Ticket</button>
+                                    <button type="submit" className="px-5 py-2.5 bg-blue-500 text-white rounded-lg hover:bg-blue-600 font-medium text-sm shadow-md">Submit Ticket</button>
                                 </div>
                             </form>
                         </div>

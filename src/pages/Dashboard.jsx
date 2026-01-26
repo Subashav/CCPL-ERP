@@ -14,46 +14,46 @@ const Dashboard = () => {
                     <div className="stat-content">
                         <h3>12</h3>
                         <p>Active Projects</p>
-                        <div className="stat-trend positive">
+                        <div className="stat-trend text-blue-500">
                             <i className="fas fa-arrow-up"></i> 2 new this month
                         </div>
                     </div>
                 </div>
 
                 <div className="stat-card">
-                    <div className="stat-icon warning">
+                    <div className="stat-icon primary">
                         <i className="fas fa-tasks"></i>
                     </div>
                     <div className="stat-content">
                         <h3>45</h3>
                         <p>Pending Tasks</p>
-                        <div className="stat-trend negative">
+                        <div className="stat-trend text-blue-400">
                             <i className="fas fa-arrow-up"></i> 5 overdue
                         </div>
                     </div>
                 </div>
 
                 <div className="stat-card">
-                    <div className="stat-icon success">
+                    <div className="stat-icon primary">
                         <i className="fas fa-users"></i>
                     </div>
                     <div className="stat-content">
                         <h3>128</h3>
                         <p>Active Staff</p>
-                        <div className="stat-trend positive">
+                        <div className="stat-trend text-blue-500">
                             <i className="fas fa-check"></i> 98% attendance
                         </div>
                     </div>
                 </div>
 
                 <div className="stat-card">
-                    <div className="stat-icon info">
+                    <div className="stat-icon primary">
                         <i className="fas fa-box"></i>
                     </div>
                     <div className="stat-content">
                         <h3>Low</h3>
                         <p>Stock Alerts</p>
-                        <div className="stat-trend warning">
+                        <div className="stat-trend text-blue-300">
                             <i className="fas fa-exclamation-triangle"></i> 3 items low
                         </div>
                     </div>
@@ -80,7 +80,7 @@ const Dashboard = () => {
                             </div>
 
                             <div className="activity-item px-6 py-4 border-b border-gray-100 flex items-start gap-4 hover:bg-gray-50 transition-colors">
-                                <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 shrink-0">
+                                <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-500 shrink-0">
                                     <i className="fas fa-check"></i>
                                 </div>
                                 <div>
@@ -91,7 +91,7 @@ const Dashboard = () => {
                             </div>
 
                             <div className="activity-item px-6 py-4 border-b border-gray-100 flex items-start gap-4 hover:bg-gray-50 transition-colors">
-                                <div className="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600 shrink-0">
+                                <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-400 shrink-0">
                                     <i className="fas fa-exclamation-triangle"></i>
                                 </div>
                                 <div>
@@ -122,14 +122,14 @@ const Dashboard = () => {
                                     </div>
                                 </div>
                                 <div className="flex gap-2 w-full sm:w-auto">
-                                    <button className="btn btn-sm btn-success flex-1 sm:flex-none">Approve</button>
-                                    <button className="btn btn-sm btn-danger flex-1 sm:flex-none">Reject</button>
+                                    <button className="btn btn-sm btn-primary flex-1 sm:flex-none">Approve</button>
+                                    <button className="btn btn-sm btn-outline flex-1 sm:flex-none">Reject</button>
                                 </div>
                             </div>
 
                             <div className="border border-gray-200 rounded-lg p-4 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between hover:shadow-md transition-shadow bg-white">
                                 <div className="flex items-center gap-4">
-                                    <div className="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center text-orange-600">
+                                    <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center text-blue-500">
                                         <i className="fas fa-clipboard-check"></i>
                                     </div>
                                     <div>
@@ -138,8 +138,8 @@ const Dashboard = () => {
                                     </div>
                                 </div>
                                 <div className="flex gap-2 w-full sm:w-auto">
-                                    <button className="btn btn-sm btn-success flex-1 sm:flex-none">Approve</button>
-                                    <button className="btn btn-sm btn-danger flex-1 sm:flex-none">Reject</button>
+                                    <button className="btn btn-sm btn-primary flex-1 sm:flex-none">Approve</button>
+                                    <button className="btn btn-sm btn-outline flex-1 sm:flex-none">Reject</button>
                                 </div>
                             </div>
                         </div>

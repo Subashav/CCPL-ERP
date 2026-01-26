@@ -6,13 +6,13 @@
 
 /* CSS Variables */
 :root {
-  --primary-color: #2563eb;
-  --primary-dark: #1d4ed8;
+  --primary-color: #3b82f6;
+  --primary-dark: #2563eb;
   --secondary-color: #64748b;
-  --accent-color: #f59e0b;
-  --success-color: #10b981;
-  --warning-color: #f59e0b;
-  --danger-color: #ef4444;
+  --accent-color: #3b82f6;
+  --success-color: #3b82f6;
+  --warning-color: #3b82f6;
+  --danger-color: #3b82f6;
   --info-color: #3b82f6;
 
   --white: #ffffff;
@@ -663,8 +663,13 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .fade-in {

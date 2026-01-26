@@ -158,8 +158,8 @@ const Attendance = () => {
                                                     disabled={readOnly}
                                                     onClick={() => handleStatusChange(p.id, st)}
                                                     className={`px-3 py-1.5 text-[10px] font-bold uppercase transition-all rounded-sm border ${entry.status === st
-                                                            ? (st === 'Present' ? 'bg-blue-600 border-blue-600 text-white shadow-sm' : st === 'Absent' ? 'bg-slate-800 border-slate-800 text-white' : 'bg-amber-500 border-amber-500 text-white')
-                                                            : 'bg-white border-slate-200 text-slate-400 hover:border-slate-300'
+                                                        ? (st === 'Present' ? 'bg-blue-500 border-blue-500 text-white shadow-sm' : st === 'Absent' ? 'bg-gray-800 border-gray-800 text-white' : 'bg-blue-300 border-blue-300 text-white')
+                                                        : 'bg-white border-slate-200 text-slate-400 hover:border-blue-300'
                                                         }`}
                                                 >
                                                     {st}
@@ -228,12 +228,12 @@ const Attendance = () => {
                         <button
                             onClick={handleSubmit}
                             disabled={isSaving}
-                            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-sm font-bold text-xs uppercase tracking-widest shadow-md transition-all active:scale-95 disabled:opacity-50"
+                            className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-sm font-bold text-xs uppercase tracking-widest shadow-md transition-all active:scale-95 disabled:opacity-50"
                         >
                             {isSaving ? <><i className="fas fa-spinner fa-spin mr-2"></i> SUBMITTING...</> : 'Submit Attendance'}
                         </button>
                     ) : (
-                        <div className="bg-amber-50 border border-amber-200 text-amber-600 px-6 py-3 rounded-sm flex items-center gap-2">
+                        <div className="bg-blue-50 border border-blue-100 text-blue-500 px-6 py-3 rounded-sm flex items-center gap-2">
                             <i className="fas fa-lock text-xs"></i>
                             <span className="text-[10px] font-bold uppercase tracking-widest">Locked (Past Date)</span>
                         </div>
@@ -243,7 +243,7 @@ const Attendance = () => {
 
             {/* Attendance Tables */}
             <AttendanceTable workers={supervisors} title="Site Supervisors" color="blue" />
-            <AttendanceTable workers={labours} title="Skilled & Unskilled Labours" color="slate" />
+            <AttendanceTable workers={labours} title="Skilled & Unskilled Labours" color="blue" />
 
             <div className="pb-20"></div>
         </div>
