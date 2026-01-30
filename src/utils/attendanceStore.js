@@ -3,10 +3,39 @@
  * Handles persistence for attendance logs (headers) and entries (details)
  */
 
+const INITIAL_LOGS = [
+    {
+        attendanceId: 'ATT-20260129-SKYL',
+        date: new Date().toISOString().split('T')[0],
+        projectId: 'PROJ-SKYL',
+        projectName: 'Skyline Residential Complex',
+        siteEngineerId: 'ENG001',
+        siteEngineerName: 'Amit Verma',
+        summary: { present: 24, absent: 2, halfDay: 1 },
+        createdAt: new Date().toISOString()
+    },
+    {
+        attendanceId: 'ATT-20260128-HWY',
+        date: new Date(Date.now() - 86400000).toISOString().split('T')[0], // Yesterday
+        projectId: 'PROJ-HWY',
+        projectName: 'Highway Extension - Phase 2',
+        siteEngineerId: 'ENG002',
+        siteEngineerName: 'Vikram Singh',
+        summary: { present: 18, absent: 0, halfDay: 0 },
+        createdAt: new Date(Date.now() - 86400000).toISOString()
+    }
+];
+
+const INITIAL_ENTRIES = []; // We can add detail entries if needed, but summary is enough for the list view for now.
+
 // Get all attendance logs (summaries of submissions)
 export const getAttendanceLogs = () => {
     const data = localStorage.getItem('ccpl_attendance_logs');
-    return data ? JSON.parse(data) : [];
+    if (!data) {
+        localStorage.setItem('ccpl_attendance_logs', JSON.stringify(INITIAL_LOGS));
+        return INITIAL_LOGS;
+    }
+    return JSON.parse(data);
 };
 
 // Get all attendance entries (detailed records for people)

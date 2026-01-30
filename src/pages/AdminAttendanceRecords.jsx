@@ -6,8 +6,7 @@ const AdminAttendanceRecords = () => {
     const navigate = useNavigate();
     const [logs, setLogs] = useState([]);
     const [filterDate, setFilterDate] = useState('');
-    const [filterProject, setFilterProject] = useState('All');
-    const [searchEngineer, setSearchEngineer] = useState('');
+    const [searchQuery, setSearchQuery] = useState('');
 
     const currentUser = JSON.parse(sessionStorage.getItem('currentUser') || '{"role": "admin"}');
 
@@ -25,147 +24,162 @@ const AdminAttendanceRecords = () => {
 
     const filteredLogs = logs.filter(log => {
         const dateMatch = !filterDate || log.date === filterDate;
-        const projectMatch = filterProject === 'All' || log.projectName === filterProject;
-        const engineerMatch = log.siteEngineerName.toLowerCase().includes(searchEngineer.toLowerCase());
-        return dateMatch && projectMatch && engineerMatch;
+        const searchMatch =
+            log.projectName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            log.siteEngineerName.toLowerCase().includes(searchQuery.toLowerCase());
+        return dateMatch && searchMatch;
     });
 
-    const projects = ['All', ...new Set(logs.map(l => l.projectName))];
+    const totalPresent = logs.reduce((acc, curr) => acc + curr.summary.present, 0);
+    const totalAbsent = logs.reduce((acc, curr) => acc + curr.summary.absent, 0);
+    const totalRecords = logs.length;
 
     return (
-        <div className="p-8 max-w-full font-sans bg-slate-50 min-h-screen animate-in slide-in-from-bottom-5 duration-700">
-            {/* Page Header & Stats Header */}
-            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-8">
+        <div className="p-8 max-w-7xl mx-auto min-h-screen animate-in fade-in duration-500">
+            {/* Header Section */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                 <div>
-                    <h1 className="text-2xl font-bold text-slate-900 tracking-tight m-0">Project Attendance Records</h1>
-                    <p className="text-slate-500 text-sm font-medium mt-1">Review and audit daily site attendance submissions by engineers</p>
+                    <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Project Attendance Records</h1>
+                    <p className="text-gray-500 mt-1">Audit daily manpower attendance submissions</p>
                 </div>
-
-                <div className="flex items-center gap-3">
-                    <div className="bg-white px-6 py-4 border border-slate-200 shadow-sm rounded-sm text-center min-w-[120px]">
-                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Total Submissions</p>
-                        <p className="text-xl font-bold text-slate-800">{logs.length}</p>
+                <div className="flex gap-4">
+                    <div className="bg-white px-5 py-2.5 rounded-xl border border-gray-200 shadow-sm flex flex-col items-center min-w-[100px]">
+                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Submissions</span>
+                        <span className="text-xl font-black text-gray-800">{totalRecords}</span>
                     </div>
                 </div>
             </div>
 
-            {/* Filter Toolbar */}
-            <div className="bg-white border border-slate-200 p-6 rounded-sm shadow-sm mb-10 flex flex-wrap items-end gap-6">
-                <div className="flex flex-col">
-                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 ml-0.5">Filter Date</label>
+            {/* Filter Bar */}
+            <div className="bg-white rounded-xl border border-gray-200 p-4 mb-8 flex flex-col md:flex-row items-center justify-between gap-4 shadow-sm">
+                <div className="flex items-center gap-4 w-full md:w-auto flex-1">
+                    <div className="relative w-full max-w-sm">
+                        <i className="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                        <input
+                            type="text"
+                            placeholder="Search by project or engineer..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all font-medium"
+                        />
+                    </div>
+                    <div className="bg-gray-100 h-8 w-px mx-2 hidden md:block"></div>
                     <input
                         type="date"
                         value={filterDate}
                         onChange={(e) => setFilterDate(e.target.value)}
-                        className="bg-slate-50 border border-slate-200 px-4 py-2 rounded-sm text-sm font-semibold outline-none focus:border-blue-500"
+                        className="border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 focus:outline-none focus:border-blue-500"
                     />
                 </div>
 
-                <div className="flex flex-col min-w-[200px]">
-                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 ml-0.5">Project Selection</label>
-                    <select
-                        value={filterProject}
-                        onChange={(e) => setFilterProject(e.target.value)}
-                        className="bg-slate-50 border border-slate-200 px-4 py-2 rounded-sm text-sm font-semibold outline-none appearance-none"
-                    >
-                        {projects.map(p => <option key={p} value={p}>{p}</option>)}
-                    </select>
-                </div>
-
-                <div className="flex flex-col flex-1 min-w-[250px]">
-                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 ml-0.5">Search Engineer</label>
-                    <div className="relative">
-                        <i className="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-300"></i>
-                        <input
-                            type="text"
-                            placeholder="Enter Site Engineer Name..."
-                            value={searchEngineer}
-                            onChange={(e) => setSearchEngineer(e.target.value)}
-                            className="w-full bg-slate-50 border border-slate-200 pl-10 pr-4 py-2 rounded-sm text-sm font-semibold outline-none focus:border-blue-500 placeholder:text-slate-300"
-                        />
-                    </div>
-                </div>
-
                 <button
-                    onClick={() => { setFilterDate(''); setFilterProject('All'); setSearchEngineer(''); }}
-                    className="px-6 py-2 border border-slate-200 text-slate-400 text-[10px] font-bold uppercase hover:bg-slate-50 transition-colors rounded-sm"
+                    onClick={() => { setFilterDate(''); setSearchQuery(''); }}
+                    className="text-gray-400 hover:text-gray-600 font-bold text-xs uppercase tracking-wide transition-colors"
                 >
-                    Reset
+                    <i className="fas fa-undo mr-1"></i> Reset Filters
                 </button>
             </div>
 
-            {/* Records List */}
-            <div className="bg-white border border-slate-200 rounded-sm shadow-sm overflow-hidden">
-                <table className="w-full text-left">
-                    <thead>
-                        <tr className="bg-slate-50 border-b border-slate-200 text-slate-400">
-                            <th className="px-8 py-4 font-bold text-[10px] uppercase tracking-widest uppercase">Date</th>
-                            <th className="px-8 py-4 font-bold text-[10px] uppercase tracking-widest uppercase">Project Details</th>
-                            <th className="px-8 py-4 font-bold text-[10px] uppercase tracking-widest uppercase">Site Engineer</th>
-                            <th className="px-8 py-4 font-bold text-[10px] uppercase tracking-widest uppercase text-center">Summary (P / A / H)</th>
-                            <th className="px-8 py-4 font-bold text-[10px] uppercase tracking-widest uppercase text-right">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-100">
-                        {filteredLogs.map(log => (
-                            <tr
-                                key={log.attendanceId}
-                                className="group hover:bg-blue-50/20 cursor-pointer transition-colors"
-                                onClick={() => navigate(`/admin/attendance/${log.attendanceId}`)}
-                            >
-                                <td className="px-8 py-6 font-bold text-slate-800">
-                                    {new Date(log.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}
-                                </td>
-                                <td className="px-8 py-6">
-                                    <p className="font-bold text-blue-600 uppercase text-[11px] tracking-widest m-0">{log.projectName}</p>
-                                    <p className="text-[10px] text-slate-400 font-bold mt-1">Ref CID: {log.projectId}</p>
-                                </td>
-                                <td className="px-8 py-6">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-400 text-xs font-bold">
-                                            {log.siteEngineerName.charAt(0)}
-                                        </div>
-                                        <div>
-                                            <p className="text-sm font-bold text-slate-800 leading-tight m-0">{log.siteEngineerName}</p>
-                                            <p className="text-[10px] text-slate-400 font-medium">Logged on {new Date(log.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td className="px-8 py-6">
-                                    <div className="flex items-center justify-center gap-2">
-                                        <span className="bg-emerald-50 text-emerald-700 px-3 py-1 rounded font-bold text-xs border border-emerald-100 min-w-[32px] text-center">{log.summary.present}</span>
-                                        <span className="bg-rose-50 text-rose-700 px-3 py-1 rounded font-bold text-xs border border-rose-100 min-w-[32px] text-center">{log.summary.absent}</span>
-                                        <span className="bg-amber-50 text-amber-700 px-3 py-1 rounded font-bold text-xs border border-amber-100 min-w-[32px] text-center">{log.summary.halfDay}</span>
-                                    </div>
-                                </td>
-                                <td className="px-8 py-6 text-right">
-                                    <div className="flex items-center justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <button
-                                            className="text-xs font-bold text-blue-600 uppercase hover:underline"
-                                            onClick={(e) => { e.stopPropagation(); navigate(`/admin/attendance/${log.attendanceId}`); }}
-                                        >
-                                            View Full details
-                                        </button>
-                                        {currentUser.role === 'superadmin' && (
-                                            <button
-                                                onClick={(e) => handleDelete(e, log.attendanceId)}
-                                                className="w-8 h-8 flex items-center justify-center rounded-sm bg-rose-50 text-rose-600 hover:bg-rose-600 hover:text-white transition-all transform active:scale-95"
-                                            >
-                                                <i className="fas fa-trash-alt text-xs"></i>
-                                            </button>
-                                        )}
-                                    </div>
-                                </td>
+            {/* Records List Table */}
+            <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+                <div className="overflow-x-auto">
+                    <table className="w-full text-left border-collapse">
+                        <thead className="bg-gray-50/50 border-b border-gray-200">
+                            <tr>
+                                <th className="px-6 py-5 text-xs font-bold text-gray-500 uppercase tracking-wider w-1/4">Date & Project</th>
+                                <th className="px-6 py-5 text-xs font-bold text-gray-500 uppercase tracking-wider w-1/4">Site Engineer</th>
+                                <th className="px-6 py-5 text-xs font-bold text-gray-500 uppercase tracking-wider text-center">Attendance Summary</th>
+                                <th className="px-6 py-5 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">Actions</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
-                {filteredLogs.length === 0 && (
-                    <div className="p-24 text-center">
-                        <i className="fas fa-clipboard-list text-slate-100 text-5xl mb-4"></i>
-                        <p className="text-slate-400 text-sm font-bold uppercase tracking-widest">No Attendance Submissions Found</p>
-                    </div>
-                )}
+                        </thead>
+                        <tbody className="divide-y divide-gray-100">
+                            {filteredLogs.map(log => (
+                                <tr
+                                    key={log.attendanceId}
+                                    className="hover:bg-blue-50/30 transition-colors group cursor-pointer"
+                                    onClick={() => navigate(`/admin/attendance/${log.attendanceId}`)}
+                                >
+                                    <td className="px-6 py-5 align-top">
+                                        <div className="flex gap-4">
+                                            <div className="bg-blue-50 border border-blue-100 rounded-lg px-3 py-2 text-center min-w-[60px]">
+                                                <div className="text-xs font-bold text-blue-600 uppercase tracking-wider">
+                                                    {new Date(log.date).toLocaleDateString('en-US', { month: 'short' })}
+                                                </div>
+                                                <div className="text-xl font-black text-gray-800 leading-none mt-0.5">
+                                                    {new Date(log.date).getDate()}
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <p className="font-bold text-gray-900 line-clamp-1">{log.projectName}</p>
+                                                <p className="text-xs text-gray-400 font-mono mt-1">Ref: {log.attendanceId.split('-')[1]}</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td className="px-6 py-5 align-middle">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-9 h-9 rounded-full bg-indigo-50 text-indigo-600 border border-indigo-100 flex items-center justify-center font-bold text-sm">
+                                                {log.siteEngineerName.charAt(0)}
+                                            </div>
+                                            <div>
+                                                <p className="text-sm font-bold text-gray-800">{log.siteEngineerName}</p>
+                                                <p className="text-[10px] text-gray-400 font-medium">
+                                                    Submitted: {new Date(log.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td className="px-6 py-5 align-middle">
+                                        <div className="flex items-center justify-center gap-2">
+                                            <div className="flex flex-col items-center px-4 py-2 bg-emerald-50 rounded-lg border border-emerald-100 min-w-[70px]">
+                                                <span className="text-lg font-black text-emerald-600 leading-none">{log.summary.present}</span>
+                                                <span className="text-[9px] font-bold text-emerald-700/60 uppercase mt-1">Present</span>
+                                            </div>
+                                            <div className="flex flex-col items-center px-4 py-2 bg-rose-50 rounded-lg border border-rose-100 min-w-[70px]">
+                                                <span className="text-lg font-black text-rose-600 leading-none">{log.summary.absent}</span>
+                                                <span className="text-[9px] font-bold text-rose-700/60 uppercase mt-1">Absent</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td className="px-6 py-5 align-middle text-right">
+                                        <div className="flex items-center justify-end gap-3">
+                                            <button
+                                                className="text-blue-600 hover:text-blue-800 font-bold text-xs uppercase tracking-wide hover:underline opacity-80 group-hover:opacity-100 transition-all flex items-center gap-1"
+                                                onClick={(e) => { e.stopPropagation(); navigate(`/admin/attendance/${log.attendanceId}`); }}
+                                            >
+                                                Details <i className="fas fa-arrow-right"></i>
+                                            </button>
+                                            {currentUser.role === 'SUPER_ADMIN' && (
+                                                <button
+                                                    onClick={(e) => handleDelete(e, log.attendanceId)}
+                                                    className="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-rose-100 text-rose-400 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 transition-all shadow-sm"
+                                                    title="Delete Record"
+                                                >
+                                                    <i className="fas fa-trash-alt text-xs"></i>
+                                                </button>
+                                            )}
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+
+                            {filteredLogs.length === 0 && (
+                                <tr>
+                                    <td colSpan="4" className="px-6 py-20 text-center">
+                                        <div className="flex flex-col items-center gap-4">
+                                            <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center text-gray-300 text-2xl">
+                                                <i className="fas fa-clipboard-check"></i>
+                                            </div>
+                                            <div>
+                                                <p className="text-gray-900 font-bold">No attendance records found</p>
+                                                <p className="text-gray-500 text-sm mt-1">Try adjusting your filters or search.</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     );

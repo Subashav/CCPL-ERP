@@ -19,9 +19,69 @@ export const getAssetsStore = () => {
     return JSON.parse(data);
 };
 
+const INITIAL_REQUESTS = [
+    {
+        id: 'REQ-X782',
+        projectName: 'Skyline Residential Complex',
+        requestedBy: 'Amit Verma (Site Engineer)',
+        assetId: 'AST015',
+        assetName: 'Cement Mixer',
+        currentInventory: 4,
+        requestedQty: 2,
+        unit: 'Units',
+        reason: 'Accelerating Block C concrete work, need extra capacity for 3 days.',
+        status: 'Pending',
+        createdAt: new Date(Date.now() - 86400000 * 2).toISOString() // 2 days ago
+    },
+    {
+        id: 'REQ-M921',
+        projectName: 'Skyline Residential Complex',
+        requestedBy: 'Amit Verma (Site Engineer)',
+        assetId: 'AST033',
+        assetName: 'Safety Harness sets',
+        currentInventory: 25,
+        requestedQty: 10,
+        unit: 'Sets',
+        reason: 'New batch of labourers joining next week for high-rise scaffolding.',
+        status: 'Pending',
+        createdAt: new Date(Date.now() - 86400000 * 1).toISOString() // 1 day ago
+    },
+    {
+        id: 'REQ-L112',
+        projectName: 'Highway Extension - Phase 2',
+        requestedBy: 'Vikram Singh (Site Supervisor)',
+        assetId: 'AST001',
+        assetName: 'Excavator CAT 320',
+        currentInventory: 1,
+        requestedQty: 1,
+        unit: 'Unit',
+        reason: 'Primary excavator breakdown, urgent replacement needed.',
+        status: 'Approved',
+        createdAt: new Date(Date.now() - 86400000 * 5).toISOString()
+    },
+    {
+        id: 'REQ-K331',
+        projectName: 'Green Valley Mall',
+        requestedBy: 'Sarah Jenkins (Project Manager)',
+        assetId: 'AST-GEN-02',
+        assetName: 'Diesel Generator 100kVA',
+        currentInventory: 1,
+        requestedQty: 2,
+        unit: 'Units',
+        reason: 'Power backup for night shifts.',
+        status: 'Rejected',
+        rejectionReason: 'Budget constraints for this quarter. Please rent locally if urgent.',
+        createdAt: new Date(Date.now() - 86400000 * 10).toISOString()
+    }
+];
+
 export const getRequestsStore = () => {
     const data = localStorage.getItem('ccpl_asset_requests_v2');
-    return data ? JSON.parse(data) : [];
+    if (!data) {
+        localStorage.setItem('ccpl_asset_requests_v2', JSON.stringify(INITIAL_REQUESTS));
+        return INITIAL_REQUESTS;
+    }
+    return JSON.parse(data);
 };
 
 export const saveAssetRequest = (request) => {

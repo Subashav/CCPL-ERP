@@ -11,6 +11,8 @@ import Assets from './pages/Assets';
 import Placeholder from './pages/Placeholder';
 import Tickets from './pages/Tickets';
 import UserManagement from './pages/UserManagement';
+import Reports from './pages/Reports';
+import Documents from './pages/Documents';
 
 import EngineerLayout from './components/EngineerLayout';
 import EngineerDashboard from './pages/engineer/Dashboard';
@@ -22,6 +24,7 @@ import AdminAssetRequests from './pages/AdminAssetRequests';
 import AdminAttendanceRecords from './pages/AdminAttendanceRecords';
 import AttendanceDetails from './pages/AttendanceDetails';
 import ManpowerSummary from './pages/ManpowerSummary';
+import ManpowerProjectDetails from './pages/ManpowerProjectDetails';
 import EngineerManpower from './pages/engineer/ManpowerManagement';
 import Vendors from './pages/Vendors';
 import VendorDetails from './pages/VendorDetails';
@@ -50,6 +53,7 @@ function App() {
           {/* NEW ERP ADMIN ROUTES */}
           <Route path="/admin/asset-requests" element={<AdminAssetRequests />} />
           <Route path="/admin/manpower-summary" element={<ManpowerSummary />} />
+          <Route path="/admin/manpower/project/:projectId" element={<ManpowerProjectDetails />} />
           <Route path="/admin/attendance-records" element={<AdminAttendanceRecords />} />
           <Route path="/admin/attendance/:id" element={<AttendanceDetails />} />
 
@@ -61,11 +65,10 @@ function App() {
           {/* PLACEHOLDER ROUTES */}
           <Route path="/labour" element={<Placeholder title="Labour Management" icon="fas fa-users" />} />
           <Route path="/procurement" element={<Placeholder title="Procurement" icon="fas fa-shopping-cart" />} />
-          {/* The old /vendors placeholder is replaced by the actual Vendor Management routes above */}
           <Route path="/billing" element={<Placeholder title="Billing" icon="fas fa-file-invoice-dollar" />} />
           <Route path="/expenses" element={<Placeholder title="Expenses" icon="fas fa-receipt" />} />
-          <Route path="/reports" element={<Placeholder title="Reports" icon="fas fa-chart-bar" />} />
-          <Route path="/documents" element={<Placeholder title="Documents" icon="fas fa-folder" />} />
+          <Route path="/reports" element={<Reports />} />
+          <Route path="/documents" element={<Documents />} />
           <Route path="/users" element={<UserManagement />} />
           <Route path="/notifications" element={<Placeholder title="Notifications" icon="fas fa-bell" />} />
           <Route path="/settings" element={<Placeholder title="Settings" icon="fas fa-cog" />} />
