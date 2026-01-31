@@ -26,6 +26,8 @@ const Sidebar = ({ collapsed }) => {
     }, []);
 
     const adminItems = [
+        { header: 'QUICK ACCESS' },
+        { name: 'Home Screen', path: '/', icon: 'fas fa-globe' },
         { header: 'CORE MODULES' },
         { name: 'Executive Dashboard', path: '/super-admin', icon: 'fas fa-chart-line', roles: ['SUPER_ADMIN'] },
         { name: 'Dashboard', path: '/dashboard', icon: 'fas fa-tachometer-alt' },
@@ -69,6 +71,8 @@ const Sidebar = ({ collapsed }) => {
     ];
 
     const siteManagerItems = [
+        { header: 'QUICK ACCESS' },
+        { name: 'Home Screen', path: '/', icon: 'fas fa-globe' },
         { header: 'SITE EXECUTION' },
         { name: 'My Dashboard', path: '/engineer/dashboard', icon: 'fas fa-home' },
         { name: 'My Projects', path: '/engineer/projects', icon: 'fas fa-hard-hat' },

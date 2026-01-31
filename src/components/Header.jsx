@@ -9,7 +9,7 @@ const Header = ({ onToggleSidebar }) => {
 
     const handleLogout = () => {
         logout();
-        navigate('/');
+        navigate('/login');
     };
 
     const getRoleLabel = (role) => {
@@ -46,6 +46,14 @@ const Header = ({ onToggleSidebar }) => {
             <div className="header-left">
                 <button className="sidebar-toggle" onClick={onToggleSidebar}>
                     <i className="fas fa-bars"></i>
+                </button>
+                <button
+                    onClick={() => navigate('/login')}
+                    className="flex items-center gap-2 bg-gray-100/50 hover:bg-gray-200 text-navy-900 px-3 py-1.5 rounded-lg ml-3 transition-all duration-200 border border-gray-200/50"
+                    title="Go to Landing Page"
+                >
+                    <i className="fas fa-home text-primary"></i>
+                    <span className="hidden sm:inline font-semibold text-xs tracking-wider uppercase">Home</span>
                 </button>
                 <div className="search-bar hidden md:flex items-center bg-gray-100 rounded-lg px-3 py-1.5 ml-4">
                     <i className="fas fa-search text-gray-400 mr-2"></i>

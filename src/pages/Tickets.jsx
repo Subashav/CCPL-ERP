@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
 
 const Tickets = () => {
-    // Current User & Role
-    const [currentUser, setCurrentUser] = useState(JSON.parse(sessionStorage.getItem('currentUser') || '{}'));
-    const isEngineer = currentUser.role === 'engineer';
-    const isAdmin = currentUser.role === 'admin' || currentUser.role === 'superadmin';
+    // Current User & Role using AuthContext
+    const { user } = useAuth();
+    const isEngineer = user?.role === 'SITE_ENGINEER';
+    const isAdmin = user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN';
 
     // Mock Projects
     const projects = ['Skyline Residential Complex', 'City Center Mall', 'Highway Bridge Project'];
@@ -25,7 +26,7 @@ const Tickets = () => {
                 priority: 'Critical',
                 location: 'Block A, East Wing',
                 date: '2023-10-28T10:30',
-                requester: 'David Lee',
+                requester: 'Site Engineer', // Matching default mock name for SE
                 status: 'In Progress',
                 assignedTo: 'Safety Officer',
                 deadline: '2023-10-29',
@@ -75,7 +76,7 @@ const Tickets = () => {
             priority: formData.get('priority'),
             location: formData.get('location'),
             date: new Date().toISOString(), // Capture precise reporting time
-            requester: currentUser.name || 'Unknown',
+            requester: user?.name || 'Unknown',
             status: 'Pending',
             assignedTo: '',
             deadline: '',
@@ -122,8 +123,8 @@ const Tickets = () => {
     // --- Derived Data ---
 
     const filteredTickets = tickets.filter(t => {
-        // Role check
-        if (isEngineer && t.requester !== currentUser.name) return false;
+        // Role check: Engineers only see their own tickets
+        if (isEngineer && t.requester !== user?.name) return false;
 
         // Admin Filters
         if (isAdmin) {
@@ -137,9 +138,9 @@ const Tickets = () => {
 
     const getPriorityBadge = (p) => {
         switch (p) {
-            case 'Critical': return 'bg-blue-600 text-white border-blue-700';
-            case 'High': return 'bg-blue-500 text-white border-blue-600';
-            case 'Medium': return 'bg-blue-100 text-blue-700 border-blue-200';
+            case 'Critical': return 'bg-red-600 text-white border-red-700';
+            case 'High': return 'bg-orange-500 text-white border-orange-600';
+            case 'Medium': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
             case 'Low': return 'bg-blue-50 text-blue-600 border-blue-100';
             default: return 'bg-gray-100 text-gray-700';
         }
@@ -147,12 +148,12 @@ const Tickets = () => {
 
     const getStatusBadge = (s) => {
         switch (s) {
-            case 'Pending': return 'bg-gray-100 text-gray-600';
-            case 'In Progress': return 'bg-blue-100 text-blue-700';
-            case 'On Hold': return 'bg-blue-50 text-blue-600';
-            case 'Resolved': return 'bg-blue-600 text-white';
-            case 'Closed': return 'bg-gray-800 text-white';
-            default: return 'bg-gray-100';
+            case 'Pending': return 'bg-gray-100 text-gray-600 border-gray-200';
+            case 'In Progress': return 'bg-blue-100 text-blue-700 border-blue-200';
+            case 'On Hold': return 'bg-orange-100 text-orange-700 border-orange-200';
+            case 'Resolved': return 'bg-emerald-100 text-emerald-700 border-emerald-200';
+            case 'Closed': return 'bg-navy-900 text-white border-navy-950';
+            default: return 'bg-gray-100 text-gray-700';
         }
     };
 
