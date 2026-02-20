@@ -40,15 +40,30 @@
   --transition: all 0.3s ease;
 }
 
+/* Fluid Typography - Auto-scales based on viewport */
+:root {
+  --fluid-min-width: 320;
+  --fluid-max-width: 1280;
+  --fluid-min-size: 14;
+  --fluid-max-size: 16;
+  --fluid-min-ratio: 1.2;
+  --fluid-max-ratio: 1.333;
+}
+
 @layer base {
   * {
     @apply m-0 p-0 box-border;
   }
 
+  html {
+    font-size: clamp(0.875rem, 0.8rem + 0.5vw, 1rem);
+  }
+
   body {
-    @apply font-sans text-base leading-relaxed bg-gray-50;
+    @apply font-sans leading-relaxed bg-gray-50;
     color: var(--text-main);
     background-color: var(--light-gray);
+    font-size: 1rem;
   }
 
   h1,
@@ -61,19 +76,19 @@
   }
 
   h1 {
-    @apply text-3xl;
+    font-size: clamp(1.5rem, 1.2rem + 1.5vw, 2rem);
   }
 
   h2 {
-    @apply text-2xl;
+    font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem);
   }
 
   h3 {
-    @apply text-xl;
+    font-size: clamp(1.125rem, 0.9rem + 0.8vw, 1.5rem);
   }
 
   h4 {
-    @apply text-lg;
+    font-size: clamp(1rem, 0.85rem + 0.5vw, 1.25rem);
   }
 
   h5 {
@@ -1020,13 +1035,6 @@ body {
   }
 }
 
-/* Responsive font sizes */
-@media screen and (max-width: 640px) {
-  html {
-    font-size: 14px;
-  }
-}
-
 /* Safe area padding for iPhones */
 @supports (padding: max(0px)) {
   .safe-area-top {
@@ -1040,5 +1048,215 @@ body {
   }
   .safe-area-right {
     padding-right: max(12px, env(safe-area-inset-right));
+  }
+}
+
+/* ==========================================
+   COMPREHENSIVE MOBILE AUTO-SCALING
+   ========================================== */
+
+/* Fluid spacing utilities */
+.p-fluid {
+  padding: clamp(0.75rem, 2vw, 1.5rem);
+}
+
+.px-fluid {
+  padding-left: clamp(0.75rem, 3vw, 2rem);
+  padding-right: clamp(0.75rem, 3vw, 2rem);
+}
+
+.py-fluid {
+  padding-top: clamp(0.75rem, 2vw, 1.5rem);
+  padding-bottom: clamp(0.75rem, 2vw, 1.5rem);
+}
+
+.gap-fluid {
+  gap: clamp(0.5rem, 2vw, 1.5rem);
+}
+
+/* Auto-fit grids */
+.grid-auto-fit {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+}
+
+.grid-auto-fill {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+}
+
+/* Container with fluid padding */
+.container-fluid {
+  width: 100%;
+  max-width: 100%;
+  padding-left: clamp(1rem, 4vw, 2rem);
+  padding-right: clamp(1rem, 4vw, 2rem);
+}
+
+/* Mobile-first card scaling */
+@media screen and (max-width: 480px) {
+  /* Smaller text on very small screens */
+  .text-responsive-xs {
+    font-size: 0.65rem;
+  }
+  .text-responsive-sm {
+    font-size: 0.75rem;
+  }
+  .text-responsive-base {
+    font-size: 0.8125rem;
+  }
+  .text-responsive-lg {
+    font-size: 0.875rem;
+  }
+  .text-responsive-xl {
+    font-size: 1rem;
+  }
+  
+  /* Tighter spacing on mobile */
+  .space-y-mobile > * + * {
+    margin-top: 0.5rem;
+  }
+  
+  /* Full width buttons on mobile */
+  .btn-mobile-full {
+    width: 100%;
+  }
+  
+  /* Stack flex items on mobile */
+  .flex-mobile-col {
+    flex-direction: column;
+  }
+  
+  /* Reduce icon sizes on very small screens */
+  .icon-responsive svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Small mobile (320-480px) */
+@media screen and (max-width: 640px) {
+  /* Auto-scale page padding */
+  .page-container {
+    padding: 0.75rem !important;
+  }
+  
+  /* Auto-scale stat cards */
+  .stat-card {
+    padding: 0.75rem !important;
+  }
+  
+  .stat-card .stat-value {
+    font-size: 1.25rem !important;
+  }
+  
+  .stat-card .stat-label {
+    font-size: 0.7rem !important;
+  }
+  
+  /* Auto-scale chart cards */
+  .chart-card {
+    padding: 0.75rem !important;
+  }
+  
+  /* Tables - make scrollable */
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 0 -0.75rem;
+    padding: 0 0.75rem;
+  }
+  
+  .table-responsive table {
+    min-width: 500px;
+  }
+  
+  /* Modal width fix */
+  .modal-responsive {
+    width: calc(100vw - 1.5rem) !important;
+    max-width: calc(100vw - 1.5rem) !important;
+    margin: 0.75rem !important;
+  }
+  
+  /* Card text scaling */
+  .card-responsive h3 {
+    font-size: 0.9rem !important;
+  }
+  
+  .card-responsive p {
+    font-size: 0.75rem !important;
+  }
+  
+  /* Button scaling */
+  .btn-responsive {
+    padding: 0.5rem 0.75rem !important;
+    font-size: 0.75rem !important;
+  }
+  
+  /* Badge scaling */
+  .badge-responsive {
+    padding: 0.125rem 0.375rem !important;
+    font-size: 0.625rem !important;
+  }
+}
+
+/* Tablet adjustments (640-1024px) */
+@media screen and (min-width: 641px) and (max-width: 1024px) {
+  .page-container {
+    padding: 1rem !important;
+  }
+  
+  .stat-card .stat-value {
+    font-size: 1.5rem !important;
+  }
+}
+
+/* Touch-friendly interaction states */
+@media (hover: none) and (pointer: coarse) {
+  /* Larger touch targets */
+  button,
+  a,
+  .clickable,
+  [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Remove hover effects on touch devices */
+  .hover-lift:hover {
+    transform: none;
+  }
+  
+  /* Active state for touch feedback */
+  button:active,
+  a:active,
+  .clickable:active {
+    opacity: 0.7;
+    transform: scale(0.98);
+  }
+}
+
+/* Landscape phone adjustments */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+  .header {
+    height: 48px !important;
+  }
+  
+  .content-area {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+}
+
+/* High DPI / Retina display adjustments */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .border,
+  .border-t,
+  .border-b,
+  .border-l,
+  .border-r {
+    border-width: 0.5px;
   }
 }
