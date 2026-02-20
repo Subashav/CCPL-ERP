@@ -57,6 +57,7 @@ const Login = () => {
 
     return (
         <div className="login-page">
+            <div className="floating-elements"></div>
             <div className="login-container">
                 <div className="login-card">
                     <div className="logo-section py-6">

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
     BarChart, Bar, PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, CartesianGrid, XAxis, YAxis
 } from 'recharts';
@@ -11,6 +12,7 @@ import ChartCard from '../components/dashboard/ChartCard';
 import DashboardTable from '../components/dashboard/DashboardTable';
 
 const SuperAdminDashboard = () => {
+    const navigate = useNavigate();
     const [currentTime, setCurrentTime] = useState(new Date());
 
     useEffect(() => {
@@ -57,45 +59,45 @@ const SuperAdminDashboard = () => {
     ];
 
     return (
-        <div className="space-y-8 animate-in fade-in duration-500 max-w-[1600px] mx-auto pb-10 p-6">
+        <div className="space-y-4 sm:space-y-6 lg:space-y-8 animate-in fade-in duration-500 max-w-[1600px] mx-auto pb-10 p-4 sm:p-6">
 
             {/* Header / Banner Section */}
-            <div className="relative w-full bg-gradient-to-r from-slate-800 via-slate-900 to-slate-950 rounded-2xl p-8 mb-8 shadow-lg overflow-hidden text-white">
+            <div className="relative w-full bg-gradient-to-r from-slate-800 via-slate-900 to-slate-950 rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 shadow-lg overflow-hidden text-white">
                 {/* Background Shapes for visual interest */}
-                <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500 opacity-10 rounded-full -mr-16 -mt-16 blur-3xl"></div>
-                <div className="absolute bottom-0 left-0 w-48 h-48 bg-blue-500 opacity-10 rounded-full -ml-16 -mb-16 blur-2xl"></div>
+                <div className="absolute top-0 right-0 w-32 sm:w-64 h-32 sm:h-64 bg-purple-500 opacity-10 rounded-full -mr-8 sm:-mr-16 -mt-8 sm:-mt-16 blur-3xl"></div>
+                <div className="absolute bottom-0 left-0 w-24 sm:w-48 h-24 sm:h-48 bg-blue-500 opacity-10 rounded-full -ml-8 sm:-ml-16 -mb-8 sm:-mb-16 blur-2xl"></div>
 
-                <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
-                    <div className="space-y-2">
-                        <div className="flex items-center gap-3 mb-1">
-                            <div className="flex items-center gap-1.5 bg-purple-500/20 px-3 py-1 rounded-full border border-purple-500/30">
-                                <div className="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></div>
-                                <span className="text-xs font-bold tracking-wide uppercase text-purple-200">Super Admin</span>
+                <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-4 sm:gap-6">
+                    <div className="space-y-1.5 sm:space-y-2">
+                        <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-1">
+                            <div className="flex items-center gap-1.5 bg-purple-500/20 px-2 sm:px-3 py-1 rounded-full border border-purple-500/30">
+                                <div className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-purple-400 animate-pulse"></div>
+                                <span className="text-[10px] sm:text-xs font-bold tracking-wide uppercase text-purple-200">Super Admin</span>
                             </div>
-                            <span className="text-xs font-bold tracking-wider uppercase text-slate-300">CCPL Construction Group</span>
+                            <span className="text-[10px] sm:text-xs font-bold tracking-wider uppercase text-slate-300">CCPL Construction Group</span>
                         </div>
-                        <h1 className="text-3xl font-bold tracking-tight text-white">Executive Dashboard</h1>
-                        <p className="text-slate-300 font-medium max-w-lg">
+                        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-white">Executive Dashboard</h1>
+                        <p className="text-slate-300 font-medium max-w-lg text-xs sm:text-sm lg:text-base">
                             Welcome back. Overview of all corporate metrics and automated reporting.
                         </p>
                     </div>
 
-                    <div className="flex items-center gap-4">
-                        <div className="bg-white/5 backdrop-blur-md border border-white/10 p-4 rounded-xl flex items-center gap-4 shadow-sm hover:bg-white/10 transition-colors">
+                    <div className="flex items-center gap-3 sm:gap-4 w-full md:w-auto">
+                        <div className="bg-white/5 backdrop-blur-md border border-white/10 p-3 sm:p-4 rounded-xl flex items-center gap-3 sm:gap-4 shadow-sm hover:bg-white/10 transition-colors">
                             <div className="text-right">
-                                <p className="text-2xl font-bold leading-none font-mono tracking-tight text-white">
+                                <p className="text-lg sm:text-xl lg:text-2xl font-bold leading-none font-mono tracking-tight text-white">
                                     {currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                 </p>
-                                <p className="text-xs text-slate-300 font-medium">
+                                <p className="text-[10px] sm:text-xs text-slate-300 font-medium">
                                     {currentTime.toLocaleDateString(undefined, { weekday: 'long' })}
                                 </p>
                             </div>
-                            <div className="h-8 w-[1px] bg-slate-600"></div>
-                            <div className="text-center min-w-[30px]">
-                                <span className="text-xs font-bold text-purple-300 uppercase block">
+                            <div className="h-6 sm:h-8 w-[1px] bg-slate-600"></div>
+                            <div className="text-center min-w-[25px] sm:min-w-[30px]">
+                                <span className="text-[10px] sm:text-xs font-bold text-purple-300 uppercase block">
                                     {currentTime.toLocaleDateString(undefined, { month: 'short' })}
                                 </span>
-                                <span className="text-xl font-bold text-white block leading-none">
+                                <span className="text-lg sm:text-xl font-bold text-white block leading-none">
                                     {currentTime.toLocaleDateString(undefined, { day: 'numeric' })}
                                 </span>
                             </div>
@@ -104,21 +106,35 @@ const SuperAdminDashboard = () => {
                 </div>
             </div>
 
-            {/* Action Bar */}
-            <div className="flex justify-between items-center bg-white p-4 rounded-xl border border-slate-100 shadow-sm mb-6">
-                <h2 className="text-lg font-bold text-slate-800">Financial Overview</h2>
-                <div className="flex gap-3">
-                    <button className="flex items-center gap-2 bg-white border border-slate-200 text-slate-600 px-4 py-2 rounded-lg hover:bg-slate-50 shadow-sm transition-all text-sm font-medium">
-                        <FileText size={16} /> Reports
+            {/* Action Bar - Horizontal scroll on mobile */}
+            <div className="bg-white p-3 sm:p-4 rounded-xl border border-slate-100 shadow-sm mb-4 sm:mb-6">
+                <div className="flex gap-2 sm:gap-3 overflow-x-auto scrollbar-hide pb-1">
+                    <button 
+                        onClick={() => navigate('/billing')}
+                        className="flex items-center gap-1.5 sm:gap-2 bg-slate-100 text-slate-700 px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg whitespace-nowrap text-xs sm:text-sm font-semibold flex-shrink-0 hover:bg-slate-200 transition-all"
+                    >
+                        <TrendingUp size={14} className="sm:w-4 sm:h-4" /> 
+                        <span>Financial Overview</span>
                     </button>
-                    <button className="flex items-center gap-2 bg-navy-900 text-white px-4 py-2 rounded-lg hover:bg-navy-800 shadow-md transition-all text-sm font-medium">
-                        <Users size={16} /> Manage Users
+                    <button 
+                        onClick={() => navigate('/reports')}
+                        className="flex items-center gap-1.5 sm:gap-2 bg-white border border-slate-200 text-slate-600 px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg hover:bg-slate-50 transition-all text-xs sm:text-sm font-medium whitespace-nowrap flex-shrink-0"
+                    >
+                        <FileText size={14} className="sm:w-4 sm:h-4" /> 
+                        <span>Reports</span>
+                    </button>
+                    <button 
+                        onClick={() => navigate('/users')}
+                        className="flex items-center gap-1.5 sm:gap-2 bg-slate-800 text-white px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg hover:bg-slate-700 shadow-md transition-all text-xs sm:text-sm font-medium whitespace-nowrap flex-shrink-0"
+                    >
+                        <Users size={14} className="sm:w-4 sm:h-4" /> 
+                        <span>Manage Users</span>
                     </button>
                 </div>
             </div>
 
             {/* KPI Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
                 <StatCard
                     title="Total Projects"
                     value="24"
@@ -154,7 +170,7 @@ const SuperAdminDashboard = () => {
             </div>
 
             {/* Charts Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
                 <ChartCard title="Revenue vs Expenses" className="lg:col-span-2">
                     <ResponsiveContainer width="100%" height="100%">
                         <BarChart data={financialData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
@@ -173,30 +189,37 @@ const SuperAdminDashboard = () => {
                 </ChartCard>
 
                 <ChartCard title="Project Distribution">
-                    <div className="relative w-full h-full flex items-center justify-center">
+                    <div className="relative w-full h-full flex items-center justify-center min-h-[220px] sm:min-h-[280px]">
                         <ResponsiveContainer width="100%" height="100%">
                             <PieChart>
                                 <Pie
                                     data={projectStatusData}
                                     cx="50%"
-                                    cy="50%"
-                                    innerRadius={60}
-                                    outerRadius={80}
-                                    paddingAngle={5}
+                                    cy="45%"
+                                    innerRadius={45}
+                                    outerRadius={65}
+                                    paddingAngle={3}
                                     dataKey="value"
                                 >
                                     {projectStatusData.map((entry, index) => (
                                         <Cell key={`cell-${index}`} fill={entry.color} stroke="none" />
                                     ))}
                                 </Pie>
-                                <Tooltip contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }} />
-                                <Legend verticalAlign="bottom" height={36} iconType="circle" />
+                                <Tooltip contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)', fontSize: '12px' }} />
+                                <Legend 
+                                    verticalAlign="bottom" 
+                                    height={50} 
+                                    iconType="circle"
+                                    iconSize={8}
+                                    wrapperStyle={{ fontSize: '11px', paddingTop: '8px' }}
+                                    formatter={(value) => <span className="text-slate-600">{value}</span>}
+                                />
                             </PieChart>
                         </ResponsiveContainer>
-                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none pb-8">
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ paddingBottom: '50px' }}>
                             <div className="text-center">
-                                <span className="text-4xl font-bold text-slate-800 tracking-tighter">24</span>
-                                <p className="text-xs text-slate-500 uppercase font-bold tracking-wider mt-1">Total</p>
+                                <span className="text-2xl sm:text-3xl font-bold text-slate-800 tracking-tighter">24</span>
+                                <p className="text-[10px] sm:text-xs text-slate-500 uppercase font-bold tracking-wider">Total</p>
                             </div>
                         </div>
                     </div>
@@ -204,7 +227,7 @@ const SuperAdminDashboard = () => {
             </div>
 
             {/* Tables Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
                 <DashboardTable
                     title="High Value Purchases (> ₹10L)"
                     columns={purchaseColumns}

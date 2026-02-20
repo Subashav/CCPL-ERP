@@ -20,7 +20,7 @@ const HeroSlider = () => {
     }, []);
 
     return (
-        <div className="relative min-h-[750px] w-full flex flex-col md:flex-row font-sans bg-white overflow-hidden">
+        <div className="relative min-h-screen md:min-h-[750px] w-full flex flex-col md:flex-row font-sans bg-white overflow-hidden">
 
             {/* Highly Spiky Splat SVG Clip Path Definition (Hidden) */}
             <svg width="0" height="0" className="absolute">
@@ -32,55 +32,55 @@ const HeroSlider = () => {
             </svg>
 
             {/* Left Content Section */}
-            <div className="md:w-1/2 p-8 md:p-20 flex flex-col justify-center relative z-20 bg-white">
+            <div className="w-full md:w-1/2 px-5 py-8 pt-24 sm:p-8 md:p-20 md:pt-20 flex flex-col justify-center relative z-20 bg-white">
                 <div className="animate-fade-in-left">
-                    <div className="inline-flex items-center space-x-2 bg-primary-pale text-navy-900 px-4 py-1.5 rounded-full w-fit mb-8 border border-primary/20 shadow-sm">
-                        <span className="w-2 h-2 rounded-full bg-primary animate-ping"></span>
-                        <span className="text-sm font-semibold">Live ERP Portal</span>
+                    <div className="inline-flex items-center space-x-2 bg-primary-pale text-navy-900 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full w-fit mb-4 sm:mb-8 border border-primary/20 shadow-sm">
+                        <span className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-primary animate-ping"></span>
+                        <span className="text-xs sm:text-sm font-semibold">Live ERP Portal</span>
                     </div>
 
-                    <h1 className="text-5xl md:text-8xl font-black text-navy-900 leading-[0.95] mb-6 tracking-tighter">
+                    <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-navy-900 leading-[0.95] mb-4 sm:mb-6 tracking-tighter">
                         CONSTRUCT <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-emerald-500 to-blue-600">
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-500 to-indigo-600">
                             EVERYTHING.
                         </span>
                     </h1>
 
-                    <p className="text-xl md:text-2xl text-gray-400 mb-10 max-w-lg font-medium leading-tight">
+                    <p className="text-lg sm:text-xl md:text-2xl text-gray-400 mb-6 sm:mb-10 max-w-lg font-medium leading-tight">
                         The spiky edge you need. Real-time manpower & material tracking for <span className="text-navy-900 border-b-4 border-primary">modern giants</span>.
                     </p>
 
-                    <div className="flex flex-col sm:flex-row gap-5 mb-12">
-                        <button className="bg-primary hover:bg-primary-dark text-white font-black text-lg py-5 px-10 rounded-2xl shadow-2xl shadow-primary/40 transform hover:-translate-y-2 transition-all duration-300 flex items-center justify-center gap-3 active:scale-95">
+                    <div className="flex flex-col gap-3 sm:gap-5 mb-8 sm:mb-12">
+                        <button className="bg-primary hover:bg-primary-dark text-white font-black text-base sm:text-lg py-4 sm:py-5 px-8 sm:px-10 rounded-2xl shadow-2xl shadow-primary/40 transform hover:-translate-y-2 transition-all duration-300 flex items-center justify-center gap-3 active:scale-95">
                             START NOW <i className="fas fa-bolt"></i>
                         </button>
-                        <button className="bg-white hover:bg-gray-50 text-navy-900 font-bold py-5 px-10 rounded-2xl border-2 border-gray-100 shadow-xl transition-all duration-300 flex items-center justify-center gap-3 group">
-                            <div className="w-10 h-10 rounded-full bg-navy-900 text-white flex items-center justify-center transform group-hover:rotate-[360deg] transition-transform duration-700">
-                                <i className="fas fa-play text-xs ml-1"></i>
+                        <button className="bg-white hover:bg-gray-50 text-navy-900 font-bold py-4 sm:py-5 px-8 sm:px-10 rounded-2xl border-2 border-gray-100 shadow-xl transition-all duration-300 flex items-center justify-center gap-3 group">
+                            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-navy-900 text-white flex items-center justify-center transform group-hover:rotate-[360deg] transition-transform duration-700">
+                                <i className="fas fa-play text-xs ml-0.5"></i>
                             </div>
                             SEE DEMO
                         </button>
                     </div>
 
-                    <div className="flex items-center gap-6">
-                        <div className="flex -space-x-4">
+                    <div className="flex items-center gap-4 sm:gap-6">
+                        <div className="flex -space-x-3 sm:-space-x-4">
                             {[1, 2, 3, 4, 5].map((i) => (
-                                <img key={i} src={`https://i.pravatar.cc/100?img=${i + 30}`} alt="User" className="w-12 h-12 rounded-full border-4 border-white shadow-xl hover:translate-y-[-10px] transition-transform duration-300 cursor-pointer" />
+                                <img key={i} src={`https://i.pravatar.cc/100?img=${i + 30}`} alt="User" className="w-9 h-9 sm:w-12 sm:h-12 rounded-full border-3 sm:border-4 border-white shadow-xl hover:translate-y-[-10px] transition-transform duration-300 cursor-pointer" />
                             ))}
                         </div>
-                        <div className="h-10 w-[2px] bg-gray-100"></div>
+                        <div className="h-8 sm:h-10 w-[2px] bg-gray-100"></div>
                         <div>
-                            <div className="flex text-primary text-sm mb-1">
+                            <div className="flex text-primary text-xs sm:text-sm mb-0.5 sm:mb-1">
                                 <i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i>
                             </div>
-                            <p className="text-xs text-gray-400 font-bold tracking-widest uppercase">Trusted by 500+ Projects</p>
+                            <p className="text-[10px] sm:text-xs text-gray-400 font-bold tracking-wider sm:tracking-widest uppercase">Trusted by 500+ Projects</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {/* Right Visual Section (Aggressive Splat Mask, Sliding Images) */}
-            <div className="md:w-1/2 relative bg-white flex items-center justify-center p-4 md:p-8 overflow-hidden">
+            {/* Right Visual Section (Aggressive Splat Mask, Sliding Images) - Hidden on mobile */}
+            <div className="hidden md:flex md:w-1/2 relative bg-white items-center justify-center p-4 md:p-8 overflow-hidden">
 
                 {/* Background Spikes */}
                 <div className="absolute inset-0 bg-navy-900/5 rotate-45 -z-10 translate-x-1/2"></div>
@@ -112,7 +112,7 @@ const HeroSlider = () => {
 
                     {/* Spiky Accents (Floating Diamonds) */}
                     <div className="absolute top-0 right-0 w-8 h-8 bg-primary/30 rotate-45 animate-bounce-slow"></div>
-                    <div className="absolute bottom-10 left-0 w-6 h-6 bg-emerald-500/30 rotate-[20deg] animate-bounce-delayed"></div>
+                    <div className="absolute bottom-10 left-0 w-6 h-6 bg-blue-500/30 rotate-[20deg] animate-bounce-delayed"></div>
                 </div>
 
                 {/* Vertical Indicators (Right Side) */}

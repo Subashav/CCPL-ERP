@@ -8,6 +8,8 @@ const INITIAL_ASSETS = [
     { id: 'AST015', name: 'Cement Mixer', category: 'Construction Equipment', providedQty: 4, unit: 'Units', status: 'Operational', projectName: 'Skyline Residential Complex' },
     { id: 'AST022', name: 'Power Generator 50kVA', category: 'Power Source', providedQty: 1, unit: 'Unit', status: 'In Use', projectName: 'Skyline Residential Complex' },
     { id: 'AST033', name: 'Safety Harness sets', category: 'Safety Gear', providedQty: 25, unit: 'Sets', status: 'Operational', projectName: 'Skyline Residential Complex' },
+    { id: 'AST045', name: 'Tower Crane - Section A', category: 'Heavy Machinery', providedQty: 1, unit: 'Unit', status: 'Operational', projectName: 'Skyline Residential Complex' },
+    { id: 'AST056', name: 'Water Tanker 5000L', category: 'Support', providedQty: 2, unit: 'Units', status: 'Operational', projectName: 'Skyline Residential Complex' },
 ];
 
 export const getAssetsStore = () => {
@@ -23,7 +25,7 @@ const INITIAL_REQUESTS = [
     {
         id: 'REQ-X782',
         projectName: 'Skyline Residential Complex',
-        requestedBy: 'Amit Verma (Site Engineer)',
+        requestedBy: 'Mike Wilson',
         assetId: 'AST015',
         assetName: 'Cement Mixer',
         currentInventory: 4,
@@ -36,42 +38,29 @@ const INITIAL_REQUESTS = [
     {
         id: 'REQ-M921',
         projectName: 'Skyline Residential Complex',
-        requestedBy: 'Amit Verma (Site Engineer)',
-        assetId: 'AST033',
-        assetName: 'Safety Harness sets',
-        currentInventory: 25,
-        requestedQty: 10,
-        unit: 'Sets',
-        reason: 'New batch of labourers joining next week for high-rise scaffolding.',
-        status: 'Pending',
+        requestedBy: 'Mike Wilson',
+        assetId: 'AST045',
+        assetName: 'Tower Crane - Section A',
+        currentInventory: 1,
+        requestedQty: 1,
+        unit: 'Unit',
+        reason: 'Spare hydraulic motor needed for emergency maintenance.',
+        status: 'Approved',
         createdAt: new Date(Date.now() - 86400000 * 1).toISOString() // 1 day ago
     },
     {
         id: 'REQ-L112',
-        projectName: 'Highway Extension - Phase 2',
-        requestedBy: 'Vikram Singh (Site Supervisor)',
+        projectName: 'Skyline Residential Complex',
+        requestedBy: 'Mike Wilson',
         assetId: 'AST001',
         assetName: 'Excavator CAT 320',
-        currentInventory: 1,
+        currentInventory: 2,
         requestedQty: 1,
         unit: 'Unit',
-        reason: 'Primary excavator breakdown, urgent replacement needed.',
-        status: 'Approved',
-        createdAt: new Date(Date.now() - 86400000 * 5).toISOString()
-    },
-    {
-        id: 'REQ-K331',
-        projectName: 'Green Valley Mall',
-        requestedBy: 'Sarah Jenkins (Project Manager)',
-        assetId: 'AST-GEN-02',
-        assetName: 'Diesel Generator 100kVA',
-        currentInventory: 1,
-        requestedQty: 2,
-        unit: 'Units',
-        reason: 'Power backup for night shifts.',
+        reason: 'Foundation digging for Block D starting ahead of schedule.',
         status: 'Rejected',
-        rejectionReason: 'Budget constraints for this quarter. Please rent locally if urgent.',
-        createdAt: new Date(Date.now() - 86400000 * 10).toISOString()
+        rejectionReason: 'All available excavators are currently deployed at the Highway project.',
+        createdAt: new Date(Date.now() - 86400000 * 5).toISOString()
     }
 ];
 

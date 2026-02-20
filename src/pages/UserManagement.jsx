@@ -138,23 +138,25 @@ const UserManagement = () => {
 
     return (
         <>
-            <div className="p-8 max-w-7xl mx-auto min-h-screen animate-in fade-in duration-500">
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+            <div className="p-4 sm:p-6 md:p-8 max-w-7xl mx-auto min-h-screen animate-in fade-in duration-500">
+                {/* Mobile-First Header */}
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6 md:mb-8">
                     <div>
-                        <h1 className="text-3xl font-bold text-gray-900 tracking-tight">User Management</h1>
-                        <p className="text-gray-500 mt-1">Manage system access and employee profiles</p>
+                        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">Users</h1>
+                        <p className="text-xs sm:text-sm text-gray-500 mt-0.5 hidden sm:block">Manage access and profiles</p>
                     </div>
                     {message && (
-                        <div className="px-4 py-2 bg-blue-50 text-blue-700 rounded-lg text-sm font-bold border border-blue-100 animate-in slide-in-from-top-2">
+                        <div className="px-3 py-1.5 sm:px-4 sm:py-2 bg-blue-50 text-blue-700 rounded-lg text-xs sm:text-sm font-bold border border-blue-100 animate-in slide-in-from-top-2">
                             {message}
                         </div>
                     )}
                 </div>
 
-                <div className="flex gap-2 mb-8 bg-white p-1 rounded-xl border border-gray-200 w-fit shadow-sm">
+                {/* Mobile-Friendly Tab Selector */}
+                <div className="flex gap-1 sm:gap-2 mb-4 sm:mb-6 md:mb-8 bg-gray-100 sm:bg-white p-1 rounded-xl sm:border sm:border-gray-200 w-full sm:w-fit shadow-sm overflow-x-auto">
                     {user.role === 'SUPER_ADMIN' && (
                         <button
-                            className={`px-6 py-2.5 rounded-lg text-sm font-bold transition-all ${activeTab === 'admins' ? 'bg-gray-900 text-white shadow-md' : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'}`}
+                            className={`flex-1 sm:flex-none px-4 sm:px-6 py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-all ${activeTab === 'admins' ? 'bg-gray-900 text-white shadow-md' : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'}`}
                             onClick={() => { setActiveTab('admins'); setShowForm(false); }}
                         >
                             Admins
@@ -162,64 +164,102 @@ const UserManagement = () => {
                     )}
                     {user.role === 'ADMIN' && (
                         <button
-                            className={`px-6 py-2.5 rounded-lg text-sm font-bold transition-all ${activeTab === 'engineers' ? 'bg-gray-900 text-white shadow-md' : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'}`}
+                            className={`flex-1 sm:flex-none px-4 sm:px-6 py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-all ${activeTab === 'engineers' ? 'bg-gray-900 text-white shadow-md' : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'}`}
                             onClick={() => { setActiveTab('engineers'); setShowForm(false); }}
                         >
-                            Site Engineers
+                            Engineers
                         </button>
                     )}
                 </div>
 
                 <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                    <div className="flex justify-between items-center mb-6">
-                        <h2 className="text-xl font-bold text-gray-800">
-                            All {activeTab === 'admins' ? 'Administrators' : 'Site Engineers'}
+                    <div className="flex justify-between items-center mb-4 sm:mb-6">
+                        <h2 className="text-base sm:text-lg md:text-xl font-bold text-gray-800">
+                            {activeTab === 'admins' ? 'Administrators' : 'Site Engineers'}
                         </h2>
                         <button
                             onClick={() => { setShowForm(true); setFormTab('basic'); }}
-                            className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-bold text-sm shadow-lg shadow-blue-200 transition-all active:scale-95 flex items-center gap-2"
+                            className="bg-blue-600 hover:bg-blue-700 text-white px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow-lg shadow-blue-200 transition-all active:scale-95 flex items-center gap-2"
                         >
-                            <i className="fas fa-plus"></i> Add New
+                            <i className="fas fa-plus text-xs"></i>
+                            <span className="hidden xs:inline">Add</span> New
                         </button>
                     </div>
 
-                    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+                    {/* Mobile Card View for Users */}
+                    <div className="space-y-3 sm:hidden">
+                        {users.map(u => (
+                            <div key={u._id} className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
+                                <div className="flex items-start gap-3">
+                                    <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-sm flex-shrink-0">
+                                        {u.name.charAt(0)}
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                        <div className="flex items-start justify-between gap-2">
+                                            <div>
+                                                <p className="font-bold text-gray-900 text-sm">{u.name}</p>
+                                                <p className="text-xs text-gray-500 truncate">{u.email}</p>
+                                            </div>
+                                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold ${u.status === 'Active' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}>
+                                                <span className={`w-1.5 h-1.5 rounded-full ${u.status === 'Active' ? 'bg-green-500' : 'bg-red-500'}`}></span>
+                                                {u.status}
+                                            </span>
+                                        </div>
+                                        <div className="flex items-center gap-2 mt-2">
+                                            <span className="px-2 py-0.5 rounded-md bg-gray-100 text-gray-600 text-[10px] font-bold">{u.role}</span>
+                                            <button className="ml-auto text-gray-400 hover:text-blue-600 p-1">
+                                                <i className="fas fa-ellipsis-h text-xs"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                        {users.length === 0 && (
+                            <div className="bg-white rounded-xl border border-gray-200 p-8 text-center text-gray-500 text-sm">
+                                No users found. Tap 'Add New' to start.
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Desktop Table View */}
+                    <div className="hidden sm:block bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
                         <table className="w-full text-left border-collapse">
                             <thead className="bg-gray-50/50 text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200">
                                 <tr>
-                                    <th className="px-6 py-4">User Details</th>
-                                    <th className="px-6 py-4">Access Role</th>
-                                    <th className="px-6 py-4">Status</th>
-                                    <th className="px-6 py-4 text-right">Actions</th>
+                                    <th className="px-4 md:px-6 py-4">User Details</th>
+                                    <th className="px-4 md:px-6 py-4">Access Role</th>
+                                    <th className="px-4 md:px-6 py-4">Status</th>
+                                    <th className="px-4 md:px-6 py-4 text-right">Actions</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100">
                                 {users.map(u => (
                                     <tr key={u._id} className="hover:bg-gray-50/50 transition-colors">
-                                        <td className="px-6 py-4">
+                                        <td className="px-4 md:px-6 py-4">
                                             <div className="flex items-center gap-3">
-                                                <div className="w-10 h-10 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-sm">
+                                                <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-sm">
                                                     {u.name.charAt(0)}
                                                 </div>
                                                 <div>
-                                                    <p className="font-bold text-gray-900">{u.name}</p>
+                                                    <p className="font-bold text-gray-900 text-sm">{u.name}</p>
                                                     <p className="text-xs text-gray-500 font-medium">{u.email}</p>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-4">
-                                            <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-gray-100 text-gray-600 text-xs font-bold border border-gray-200">
+                                        <td className="px-4 md:px-6 py-4">
+                                            <span className="inline-flex items-center px-2 py-1 rounded-md bg-gray-100 text-gray-600 text-xs font-bold border border-gray-200">
                                                 {u.role}
                                             </span>
                                         </td>
-                                        <td className="px-6 py-4">
+                                        <td className="px-4 md:px-6 py-4">
                                             <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold ${u.status === 'Active' ? 'bg-green-50 text-green-700 border border-green-100' : 'bg-red-50 text-red-700 border border-red-100'
                                                 }`}>
                                                 <span className={`w-1.5 h-1.5 rounded-full ${u.status === 'Active' ? 'bg-green-500' : 'bg-red-500'}`}></span>
                                                 {u.status}
                                             </span>
                                         </td>
-                                        <td className="px-6 py-4 text-right">
+                                        <td className="px-4 md:px-6 py-4 text-right">
                                             <button className="text-gray-400 hover:text-blue-600 transition-colors">
                                                 <i className="fas fa-ellipsis-h"></i>
                                             </button>
@@ -235,36 +275,39 @@ const UserManagement = () => {
                 </div>
             </div>
 
-            {/* Modal */}
+            {/* Modal - Mobile Bottom Sheet Style */}
             {showForm && (
-                <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-gray-900/40 backdrop-blur-sm animate-in fade-in duration-200">
-                    <div className="bg-white w-full max-w-5xl rounded-xl shadow-2xl flex flex-col max-h-[85vh] animate-in zoom-in-95 duration-200 overflow-hidden ring-1 ring-gray-200">
+                <div className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center sm:p-4 bg-gray-900/40 backdrop-blur-sm animate-in fade-in duration-200">
+                    <div className="bg-white w-full sm:max-w-5xl rounded-t-3xl sm:rounded-xl shadow-2xl flex flex-col max-h-[95vh] sm:max-h-[85vh] animate-in slide-in-from-bottom sm:zoom-in-95 duration-200 overflow-hidden ring-1 ring-gray-200">
+                        {/* Mobile Handle */}
+                        <div className="w-12 h-1.5 bg-gray-300 rounded-full mx-auto mt-3 sm:hidden flex-shrink-0"></div>
+                        
                         {/* Modal Header */}
-                        <div className="flex justify-between items-center px-8 py-5 border-b border-gray-100 bg-white">
-                            <h2 className="text-lg font-bold text-gray-800">
-                                Create New {activeTab === 'admins' ? 'Admin' : 'Site Engineer'}
+                        <div className="flex justify-between items-center px-4 sm:px-8 py-4 sm:py-5 border-b border-gray-100 bg-white flex-shrink-0">
+                            <h2 className="text-base sm:text-lg font-bold text-gray-800">
+                                New {activeTab === 'admins' ? 'Admin' : 'Engineer'}
                             </h2>
-                            <button onClick={() => setShowForm(false)} className="text-gray-400 hover:text-gray-600 transition-colors">
-                                <i className="fas fa-times text-xl"></i>
+                            <button onClick={() => setShowForm(false)} className="w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center text-gray-500">
+                                <i className="fas fa-times"></i>
                             </button>
                         </div>
 
                         {activeTab === 'engineers' ? (
                             <form onSubmit={handleEngineerSubmit} className="flex flex-col h-full overflow-hidden">
-                                {/* Form Tabs */}
-                                <div className="flex overflow-x-auto border-b border-gray-100 px-6 bg-white sticky top-0 z-10 gap-2">
-                                    <TabButton id="basic" label="Basic Info" icon="fa-user" />
-                                    <TabButton id="job" label="Employment" icon="fa-briefcase" />
-                                    <TabButton id="access" label="Access & Security" icon="fa-shield-alt" />
-                                    <TabButton id="bank" label="Banking" icon="fa-university" />
-                                    <TabButton id="docs" label="Documents" icon="fa-file-alt" />
+                                {/* Form Tabs - Horizontally scrollable on mobile */}
+                                <div className="flex overflow-x-auto border-b border-gray-100 px-3 sm:px-6 bg-white sticky top-0 z-10 gap-0 sm:gap-2 flex-shrink-0 scrollbar-hide">
+                                    <TabButton id="basic" label="Basic" icon="fa-user" />
+                                    <TabButton id="job" label="Job" icon="fa-briefcase" />
+                                    <TabButton id="access" label="Access" icon="fa-shield-alt" />
+                                    <TabButton id="bank" label="Bank" icon="fa-university" />
+                                    <TabButton id="docs" label="Docs" icon="fa-file-alt" />
                                 </div>
 
                                 {/* Form Content */}
-                                <div className="p-8 overflow-y-auto custom-scrollbar flex-1 bg-white">
+                                <div className="p-4 sm:p-6 md:p-8 overflow-y-auto flex-1 bg-white">
                                     {formTab === 'basic' && (
-                                        <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div className="space-y-4 sm:space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
+                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                                                 <div><label className={labelClass}>Full Name <span className="text-red-500">*</span></label><input name="name" required placeholder="e.g. Rahul Sharma" className={inputClass} /></div>
                                                 <div><label className={labelClass}>Employee ID <span className="text-red-500">*</span></label><input name="empId" required placeholder="e.g. EMP-2024-001" className={inputClass} /></div>
                                             </div>

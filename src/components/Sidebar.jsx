@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { getPendingRequestsCount } from '../utils/assetStore';
 import { useAuth } from '../context/AuthContext';
 
-const Sidebar = ({ collapsed }) => {
+const Sidebar = ({ collapsed, isMobile, isOpen, onClose }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const { user } = useAuth(); // User from context
@@ -11,7 +11,7 @@ const Sidebar = ({ collapsed }) => {
     const [isHovered, setIsHovered] = useState(false);
 
     // Determines if the sidebar is visually expanded (either actively open OR hovered while collapsed)
-    const isExpanded = !collapsed || isHovered;
+    const isExpanded = isMobile ? true : (!collapsed || isHovered);
 
     const role = user?.role || 'GUEST';
 
@@ -95,18 +95,35 @@ const Sidebar = ({ collapsed }) => {
 
     let activeMenuItems = role === 'SITE_ENGINEER' ? siteManagerItems : adminItems.filter(item => !item.roles || item.roles.includes(role));
 
+    const handleNavClick = (path) => {
+        navigate(path);
+        if (isMobile && onClose) {
+            onClose();
+        }
+    };
+
     return (
         <aside
-            className={`sidebar ${!isExpanded ? 'collapsed' : ''}`}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
+            className={`sidebar ${!isExpanded ? 'collapsed' : ''} ${isMobile ? 'mobile' : ''} ${isMobile && isOpen ? 'open' : ''}`}
+            onMouseEnter={() => !isMobile && setIsHovered(true)}
+            onMouseLeave={() => !isMobile && setIsHovered(false)}
         >
             <div className="sidebar-header">
                 <div className="sidebar-logo">
                     <i className="fas fa-hard-hat text-2xl"></i>
                     {isExpanded && (
                         <span className="font-bold text-xl tracking-tight transition-opacity duration-300">Construction ERP</span>
-                    )}</div>
+                    )}
+                </div>
+                {isMobile && (
+                    <button 
+                        className="sidebar-close-btn"
+                        onClick={onClose}
+                        aria-label="Close sidebar"
+                    >
+                        <i className="fas fa-times"></i>
+                    </button>
+                )}
             </div>
 
             <nav className="sidebar-nav">
@@ -123,7 +140,7 @@ const Sidebar = ({ collapsed }) => {
                     return (
                         <button
                             key={index}
-                            onClick={() => navigate(item.path)}
+                            onClick={() => handleNavClick(item.path)}
                             className={`nav-link w-full text-left ${isActive ? 'active' : ''}`}
                             title={!isExpanded ? item.name : ''}
                         >

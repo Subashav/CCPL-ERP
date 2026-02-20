@@ -77,97 +77,155 @@ const ManpowerManagement = () => {
     const labours = manpower.filter(m => m.role === 'Labour');
 
     return (
-        <div className="p-6 max-w-7xl mx-auto animate-in fade-in duration-500">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
-                <div>
-                    <h1 className="text-4xl font-black text-gray-900 tracking-tight">Manpower Management</h1>
-                    <p className="text-gray-500 font-medium tracking-tight">Register and track site supervisors and labours individually</p>
-                </div>
-                <div className="flex gap-3">
-                    <button
-                        onClick={() => handleOpenModal('Supervisor')}
-                        className="bg-blue-500 text-white px-6 py-3 rounded-2xl font-black text-xs shadow-xl shadow-blue-100 hover:bg-blue-600 transition-all active:scale-95 flex items-center gap-2"
-                    >
-                        <i className="fas fa-user-tie"></i> + ADD SUPERVISOR
-                    </button>
-                    <button
-                        onClick={() => handleOpenModal('Labour')}
-                        className="bg-blue-500 text-white px-6 py-3 rounded-2xl font-black text-xs shadow-xl shadow-blue-100 hover:bg-blue-600 transition-all active:scale-95 flex items-center gap-2"
-                    >
-                        <i className="fas fa-users"></i> + ADD LABOUR
-                    </button>
-                </div>
+        <div className="p-4 sm:p-6 max-w-7xl mx-auto animate-in fade-in duration-500">
+            {/* Mobile-First Header */}
+            <div className="mb-4 sm:mb-6">
+                <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-gray-900 tracking-tight">Manpower</h1>
+                <p className="text-xs sm:text-sm text-gray-500 font-medium mt-0.5">Register supervisors & labours</p>
             </div>
 
-            {/* List Selection Tabs */}
-            <div className="flex gap-4 mb-8">
+            {/* Action Buttons - Grid on mobile */}
+            <div className="grid grid-cols-2 gap-2 sm:flex sm:gap-3 mb-4 sm:mb-6">
+                <button
+                    onClick={() => handleOpenModal('Supervisor')}
+                    className="bg-blue-500 text-white px-3 sm:px-6 py-3 rounded-xl sm:rounded-2xl font-bold text-[10px] sm:text-xs shadow-lg shadow-blue-100 hover:bg-blue-600 transition-all active:scale-95 flex items-center justify-center gap-1.5 sm:gap-2"
+                >
+                    <i className="fas fa-user-tie text-xs"></i>
+                    <span>+ Supervisor</span>
+                </button>
+                <button
+                    onClick={() => handleOpenModal('Labour')}
+                    className="bg-blue-500 text-white px-3 sm:px-6 py-3 rounded-xl sm:rounded-2xl font-bold text-[10px] sm:text-xs shadow-lg shadow-blue-100 hover:bg-blue-600 transition-all active:scale-95 flex items-center justify-center gap-1.5 sm:gap-2"
+                >
+                    <i className="fas fa-users text-xs"></i>
+                    <span>+ Labour</span>
+                </button>
+            </div>
+
+            {/* List Selection Tabs - Mobile optimized */}
+            <div className="flex gap-2 sm:gap-4 mb-4 sm:mb-6">
                 <button
                     onClick={() => setActiveListTab('Supervisor')}
-                    className={`flex-1 md:flex-none px-10 py-4 rounded-[1.5rem] font-black text-xs uppercase tracking-widest transition-all ${activeListTab === 'Supervisor' ? 'bg-blue-500 text-white shadow-2xl shadow-blue-100 scale-105' : 'bg-white text-gray-400 border border-gray-100 hover:bg-gray-50'}`}
+                    className={`flex-1 sm:flex-none px-4 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-[10px] sm:text-xs uppercase tracking-wide sm:tracking-widest transition-all ${activeListTab === 'Supervisor' ? 'bg-blue-500 text-white shadow-lg shadow-blue-100' : 'bg-white text-gray-400 border border-gray-200 hover:bg-gray-50'}`}
                 >
-                    <i className="fas fa-user-tie mr-2"></i> Supervisors List ({supervisors.length})
+                    <i className="fas fa-user-tie mr-1.5 sm:mr-2"></i>
+                    <span className="hidden xs:inline">Supervisors</span>
+                    <span className="xs:hidden">Sup.</span>
+                    <span className="ml-1">({supervisors.length})</span>
                 </button>
                 <button
                     onClick={() => setActiveListTab('Labour')}
-                    className={`flex-1 md:flex-none px-10 py-4 rounded-[1.5rem] font-black text-xs uppercase tracking-widest transition-all ${activeListTab === 'Labour' ? 'bg-blue-500 text-white shadow-2xl shadow-blue-100 scale-105' : 'bg-white text-gray-400 border border-gray-100 hover:bg-gray-50'}`}
+                    className={`flex-1 sm:flex-none px-4 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-[10px] sm:text-xs uppercase tracking-wide sm:tracking-widest transition-all ${activeListTab === 'Labour' ? 'bg-blue-500 text-white shadow-lg shadow-blue-100' : 'bg-white text-gray-400 border border-gray-200 hover:bg-gray-50'}`}
                 >
-                    <i className="fas fa-users mr-2"></i> Labours List ({labours.length})
+                    <i className="fas fa-users mr-1.5 sm:mr-2"></i>
+                    <span className="hidden xs:inline">Labours</span>
+                    <span className="xs:hidden">Lab.</span>
+                    <span className="ml-1">({labours.length})</span>
                 </button>
             </div>
 
-            {/* Individual Lists Display */}
-            <div className={`bg-white rounded-[2.5rem] border-2 shadow-2xl overflow-hidden transition-all duration-300 ${activeListTab === 'Supervisor' ? 'border-indigo-100 shadow-indigo-50/50' : 'border-blue-100 shadow-blue-50/50'}`}>
-                <div className="p-8 border-b border-gray-50 flex justify-between items-center">
-                    <h2 className="text-xl font-black uppercase tracking-widest text-blue-500">
-                        {activeListTab}s Directory
+            {/* Directory Card */}
+            <div className={`bg-white rounded-2xl sm:rounded-3xl border shadow-lg overflow-hidden transition-all duration-300 ${activeListTab === 'Supervisor' ? 'border-indigo-100' : 'border-blue-100'}`}>
+                <div className="p-4 sm:p-6 border-b border-gray-100 flex justify-between items-center">
+                    <h2 className="text-sm sm:text-lg font-black uppercase tracking-wide sm:tracking-widest text-blue-500">
+                        {activeListTab}s
                     </h2>
-                    <span className="bg-gray-100 text-gray-500 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter">
-                        Total Records: {activeListTab === 'Supervisor' ? supervisors.length : labours.length}
+                    <span className="bg-gray-100 text-gray-500 text-[10px] font-bold px-2 sm:px-3 py-1 rounded-full uppercase">
+                        {activeListTab === 'Supervisor' ? supervisors.length : labours.length} records
                     </span>
                 </div>
 
-                <div className="overflow-x-auto">
+                {/* Mobile Card View */}
+                <div className="sm:hidden divide-y divide-gray-100">
+                    {(activeListTab === 'Supervisor' ? supervisors : labours).map((m) => (
+                        <div key={m.id} className="p-4">
+                            <div className="flex items-start gap-3">
+                                <div className="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm bg-blue-50 text-blue-500 flex-shrink-0">
+                                    {m.name.charAt(0)}
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <div className="flex items-start justify-between gap-2">
+                                        <div>
+                                            <p className="font-bold text-gray-800 text-sm">{m.name}</p>
+                                            <p className="text-xs text-gray-500">{m.mobile}</p>
+                                        </div>
+                                        <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold flex-shrink-0 ${m.status === 'Approved' ? 'bg-green-100 text-green-700' :
+                                            m.status === 'Rejected' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'
+                                            }`}>
+                                            {m.status}
+                                        </span>
+                                    </div>
+                                    <div className="flex flex-wrap gap-2 mt-2">
+                                        {activeListTab === 'Supervisor' ? (
+                                            <>
+                                                <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded-lg text-[10px] font-semibold">{m.department}</span>
+                                                <span className="bg-gray-100 text-gray-600 px-2 py-0.5 rounded-lg text-[10px] font-semibold">{m.experience} yrs exp</span>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded-lg text-[10px] font-semibold">{m.skillType}</span>
+                                                <span className="bg-green-50 text-green-700 px-2 py-0.5 rounded-lg text-[10px] font-semibold">₹{m.dailyWage}/day</span>
+                                                <span className="bg-gray-100 text-gray-600 px-2 py-0.5 rounded-lg text-[10px] font-semibold">{m.shift}</span>
+                                            </>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                    {(activeListTab === 'Supervisor' ? supervisors : labours).length === 0 && (
+                        <div className="p-12 text-center">
+                            <div className="flex flex-col items-center gap-2 text-gray-300">
+                                <i className={`fas ${activeListTab === 'Supervisor' ? 'fa-user-tie' : 'fa-users'} text-3xl`}></i>
+                                <p className="text-xs font-bold">No {activeListTab.toLowerCase()}s yet</p>
+                            </div>
+                        </div>
+                    )}
+                </div>
+
+                {/* Desktop Table View */}
+                <div className="hidden sm:block overflow-x-auto">
                     <table className="w-full text-left">
                         <thead className="bg-blue-900 text-white">
                             <tr>
-                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-widest opacity-60">Full Name</th>
-                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-widest opacity-60">Mobile</th>
-                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-widest opacity-60">Aadhaar (Last 4)</th>
-                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-widest opacity-60">
-                                    {activeListTab === 'Supervisor' ? 'Dept / Experience' : 'Skill / Work Details'}
+                                <th className="px-4 md:px-6 py-4 text-[10px] font-bold uppercase tracking-wider opacity-80">Name</th>
+                                <th className="px-4 md:px-6 py-4 text-[10px] font-bold uppercase tracking-wider opacity-80">Mobile</th>
+                                <th className="px-4 md:px-6 py-4 text-[10px] font-bold uppercase tracking-wider opacity-80">Aadhaar</th>
+                                <th className="px-4 md:px-6 py-4 text-[10px] font-bold uppercase tracking-wider opacity-80">
+                                    {activeListTab === 'Supervisor' ? 'Dept / Exp' : 'Skill / Wage'}
                                 </th>
-                                <th className="px-8 py-5 text-[10px] font-black uppercase tracking-widest opacity-60">Status</th>
+                                <th className="px-4 md:px-6 py-4 text-[10px] font-bold uppercase tracking-wider opacity-80">Status</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-50">
+                        <tbody className="divide-y divide-gray-100">
                             {(activeListTab === 'Supervisor' ? supervisors : labours).map((m) => (
                                 <tr key={m.id} className="hover:bg-gray-50 transition-colors">
-                                    <td className="px-8 py-5">
-                                        <div className="flex items-center gap-4">
-                                            <div className="w-10 h-10 rounded-xl flex items-center justify-center font-black text-sm bg-blue-50 text-blue-500">
+                                    <td className="px-4 md:px-6 py-4">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-sm bg-blue-50 text-blue-500">
                                                 {m.name.charAt(0)}
                                             </div>
-                                            <p className="font-black text-gray-800">{m.name}</p>
+                                            <p className="font-bold text-gray-800 text-sm">{m.name}</p>
                                         </div>
                                     </td>
-                                    <td className="px-8 py-5 font-bold text-gray-500">{m.mobile}</td>
-                                    <td className="px-8 py-5 font-mono text-xs tracking-widest text-gray-400">{formatAadhaar(m.aadhaarNumber)}</td>
-                                    <td className="px-8 py-5">
+                                    <td className="px-4 md:px-6 py-4 font-semibold text-gray-500 text-sm">{m.mobile}</td>
+                                    <td className="px-4 md:px-6 py-4 font-mono text-xs text-gray-400">{formatAadhaar(m.aadhaarNumber)}</td>
+                                    <td className="px-4 md:px-6 py-4">
                                         {activeListTab === 'Supervisor' ? (
                                             <div>
-                                                <p className="text-xs font-black text-gray-700">{m.department}</p>
-                                                <p className="text-[10px] text-gray-400 font-bold uppercase">{m.experience} Years Exp</p>
+                                                <p className="text-xs font-bold text-gray-700">{m.department}</p>
+                                                <p className="text-[10px] text-gray-400 font-semibold">{m.experience} Years</p>
                                             </div>
                                         ) : (
                                             <div>
-                                                <p className="text-xs font-black text-gray-700">{m.skillType}</p>
-                                                <p className="text-[10px] text-gray-400 font-bold uppercase">₹{m.dailyWage} • {m.shift} Shift</p>
+                                                <p className="text-xs font-bold text-gray-700">{m.skillType}</p>
+                                                <p className="text-[10px] text-gray-400 font-semibold">₹{m.dailyWage} • {m.shift}</p>
                                             </div>
                                         )}
                                     </td>
-                                    <td className="px-8 py-5">
-                                        <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest ${m.status === 'Approved' ? 'bg-blue-100 text-blue-700' :
-                                            m.status === 'Rejected' ? 'bg-gray-100 text-gray-700' : 'bg-blue-50 text-blue-500'
+                                    <td className="px-4 md:px-6 py-4">
+                                        <span className={`px-3 py-1 rounded-full text-[10px] font-bold ${m.status === 'Approved' ? 'bg-green-100 text-green-700' :
+                                            m.status === 'Rejected' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'
                                             }`}>
                                             {m.status}
                                         </span>
@@ -176,10 +234,10 @@ const ManpowerManagement = () => {
                             ))}
                             {(activeListTab === 'Supervisor' ? supervisors : labours).length === 0 && (
                                 <tr>
-                                    <td colSpan="5" className="px-8 py-20 text-center">
-                                        <div className="flex flex-col items-center gap-3 opacity-30">
-                                            <i className={`fas ${activeListTab === 'Supervisor' ? 'fa-user-tie' : 'fa-users'} text-4xl mb-2`}></i>
-                                            <p className="text-xs font-black uppercase tracking-widest">No {activeListTab}s registered yet</p>
+                                    <td colSpan="5" className="px-6 py-16 text-center">
+                                        <div className="flex flex-col items-center gap-2 text-gray-300">
+                                            <i className={`fas ${activeListTab === 'Supervisor' ? 'fa-user-tie' : 'fa-users'} text-3xl`}></i>
+                                            <p className="text-xs font-bold">No {activeListTab.toLowerCase()}s registered</p>
                                         </div>
                                     </td>
                                 </tr>
@@ -189,74 +247,77 @@ const ManpowerManagement = () => {
                 </div>
             </div>
 
-            {/* Add Modal */}
+            {/* Add Modal - Mobile Bottom Sheet */}
             {isModalOpen && (
-                <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
+                <div className="fixed inset-0 z-[1000] flex items-end sm:items-center justify-center sm:p-4">
                     <div className="absolute inset-0 bg-gray-900/60 backdrop-blur-md animate-in fade-in" onClick={() => setIsModalOpen(false)}></div>
-                    <div className="bg-white rounded-[2.5rem] shadow-2xl w-full max-w-2xl relative z-10 animate-in zoom-in-95 overflow-hidden max-h-[90vh] flex flex-col">
-                        <div className="p-8 text-white relative flex justify-between items-center bg-blue-500">
+                    <div className="bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl w-full sm:max-w-2xl relative z-10 animate-in slide-in-from-bottom sm:zoom-in-95 overflow-hidden max-h-[95vh] sm:max-h-[90vh] flex flex-col">
+                        {/* Mobile Handle */}
+                        <div className="w-12 h-1.5 bg-gray-300 rounded-full mx-auto mt-3 sm:hidden flex-shrink-0"></div>
+                        
+                        <div className="px-4 sm:px-8 py-4 sm:py-6 text-white relative flex justify-between items-center bg-blue-500 flex-shrink-0">
                             <div>
-                                <h2 className="text-2xl font-black tracking-tight">Register {modalRole}</h2>
-                                <p className="text-white/70 text-[10px] font-black uppercase tracking-widest mt-1">Manpower Onboarding</p>
+                                <h2 className="text-lg sm:text-2xl font-black tracking-tight">Add {modalRole}</h2>
+                                <p className="text-white/70 text-[10px] font-bold uppercase tracking-wide mt-0.5">Onboarding</p>
                             </div>
-                            <button onClick={() => setIsModalOpen(false)} className="w-10 h-10 rounded-2xl hover:bg-white/20 flex items-center justify-center transition-colors">
-                                <i className="fas fa-times text-xl"></i>
+                            <button onClick={() => setIsModalOpen(false)} className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors">
+                                <i className="fas fa-times"></i>
                             </button>
                         </div>
 
-                        <form onSubmit={handleSubmit} className="p-8 space-y-6 overflow-y-auto grow">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <form onSubmit={handleSubmit} className="p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 overflow-y-auto grow">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                                 <div>
-                                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Project Assignment</label>
-                                    <input type="text" value="Skyline Residential Complex" readOnly className="w-full bg-gray-50 border-none px-4 py-3 rounded-2xl font-black text-gray-800 outline-none" />
+                                    <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wide mb-1.5">Project</label>
+                                    <input type="text" value="Skyline Residential" readOnly className="w-full bg-gray-50 border-none px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl font-bold text-gray-800 text-sm outline-none" />
                                 </div>
                                 <div>
-                                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Member Name *</label>
-                                    <input name="name" type="text" required placeholder="Ex: Ramesh Babu" className="w-full border-2 border-gray-100 rounded-2xl px-4 py-3 text-sm font-bold focus:border-blue-500 outline-none transition-colors" />
+                                    <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wide mb-1.5">Name *</label>
+                                    <input name="name" type="text" required placeholder="Ramesh Babu" className="w-full border-2 border-gray-100 rounded-xl sm:rounded-2xl px-3 sm:px-4 py-2.5 sm:py-3 text-sm font-semibold focus:border-blue-500 outline-none transition-colors" />
                                 </div>
                                 <div>
-                                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Mobile Contact *</label>
-                                    <input name="mobile" type="tel" required pattern="[0-9]{10}" placeholder="10 Digit Number" className="w-full border-2 border-gray-100 rounded-2xl px-4 py-3 text-sm font-bold focus:border-blue-500 outline-none transition-colors" />
+                                    <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wide mb-1.5">Mobile *</label>
+                                    <input name="mobile" type="tel" required pattern="[0-9]{10}" placeholder="10 Digits" className="w-full border-2 border-gray-100 rounded-xl sm:rounded-2xl px-3 sm:px-4 py-2.5 sm:py-3 text-sm font-semibold focus:border-blue-500 outline-none transition-colors" />
                                 </div>
                                 <div>
-                                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Aadhaar (12 Digits) *</label>
+                                    <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wide mb-1.5">Aadhaar *</label>
                                     <input
                                         name="aadhaarNumber"
                                         type="text"
                                         required
                                         onChange={handleAadhaarChange}
-                                        placeholder="0000 0000 0000"
-                                        className={`w-full border-2 rounded-2xl px-4 py-3 text-sm font-bold outline-none transition-colors ${aadhaarError ? 'border-red-500 bg-red-50 text-red-700' : 'border-gray-100 focus:border-blue-500'}`}
+                                        placeholder="12 Digits"
+                                        className={`w-full border-2 rounded-xl sm:rounded-2xl px-3 sm:px-4 py-2.5 sm:py-3 text-sm font-semibold outline-none transition-colors ${aadhaarError ? 'border-red-500 bg-red-50' : 'border-gray-100 focus:border-blue-500'}`}
                                     />
-                                    {aadhaarError && <p className="text-[10px] text-red-600 font-bold mt-1 ml-1">{aadhaarError}</p>}
+                                    {aadhaarError && <p className="text-[10px] text-red-600 font-semibold mt-1">{aadhaarError}</p>}
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 bg-gray-50 rounded-[2rem] border border-gray-100 shadow-inner">
+                            <div className="grid grid-cols-2 gap-3 sm:gap-4 p-3 sm:p-4 bg-gray-50 rounded-xl sm:rounded-2xl border border-gray-100">
                                 <div>
-                                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">Aadhaar Front View *</label>
-                                    <div className="border-2 border-dashed border-gray-200 rounded-2xl p-6 text-center hover:border-blue-400 transition-colors cursor-pointer bg-white group">
-                                        <i className="fas fa-cloud-upload-alt text-gray-200 group-hover:text-blue-400 text-2xl mb-2 transition-colors"></i>
-                                        <p className="text-[9px] font-black text-gray-400 uppercase group-hover:text-blue-500 transition-colors">Select Scan Front</p>
+                                    <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wide mb-2">Aadhaar Front *</label>
+                                    <div className="border-2 border-dashed border-gray-200 rounded-xl p-4 sm:p-6 text-center hover:border-blue-400 transition-colors cursor-pointer bg-white group">
+                                        <i className="fas fa-camera text-gray-300 group-hover:text-blue-400 text-xl sm:text-2xl mb-1 transition-colors"></i>
+                                        <p className="text-[9px] font-bold text-gray-400 uppercase">Upload Front</p>
                                         <input type="file" className="hidden" />
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">Aadhaar Back View *</label>
-                                    <div className="border-2 border-dashed border-gray-200 rounded-2xl p-6 text-center hover:border-blue-400 transition-colors cursor-pointer bg-white group">
-                                        <i className="fas fa-cloud-upload-alt text-gray-200 group-hover:text-blue-400 text-2xl mb-2 transition-colors"></i>
-                                        <p className="text-[9px] font-black text-gray-400 uppercase group-hover:text-blue-500 transition-colors">Select Scan Back</p>
+                                    <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wide mb-2">Aadhaar Back *</label>
+                                    <div className="border-2 border-dashed border-gray-200 rounded-xl p-4 sm:p-6 text-center hover:border-blue-400 transition-colors cursor-pointer bg-white group">
+                                        <i className="fas fa-camera text-gray-300 group-hover:text-blue-400 text-xl sm:text-2xl mb-1 transition-colors"></i>
+                                        <p className="text-[9px] font-bold text-gray-400 uppercase">Upload Back</p>
                                         <input type="file" className="hidden" />
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                                 {modalRole === 'Labour' ? (
                                     <>
                                         <div>
-                                            <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Skill Specialization *</label>
-                                            <select name="skillType" className="w-full border-2 border-gray-100 rounded-2xl px-4 py-3 text-sm font-bold focus:border-blue-500 outline-none bg-white appearance-none">
+                                            <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wide mb-1.5">Skill *</label>
+                                            <select name="skillType" className="w-full border-2 border-gray-100 rounded-xl sm:rounded-2xl px-3 sm:px-4 py-2.5 sm:py-3 text-sm font-semibold focus:border-blue-500 outline-none bg-white appearance-none">
                                                 <option>Mason</option>
                                                 <option>Helper</option>
                                                 <option>Carpenter</option>
@@ -265,19 +326,19 @@ const ManpowerManagement = () => {
                                             </select>
                                         </div>
                                         <div>
-                                            <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Daily Wage (₹) *</label>
-                                            <input name="dailyWage" type="number" required placeholder="Ex: 850" className="w-full border-2 border-gray-100 rounded-2xl px-4 py-3 text-sm font-bold focus:border-blue-500 outline-none" />
+                                            <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wide mb-1.5">Daily Wage (₹) *</label>
+                                            <input name="dailyWage" type="number" required placeholder="850" className="w-full border-2 border-gray-100 rounded-xl sm:rounded-2xl px-3 sm:px-4 py-2.5 sm:py-3 text-sm font-semibold focus:border-blue-500 outline-none" />
                                         </div>
-                                        <div>
-                                            <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Assigned Shift *</label>
+                                        <div className="col-span-1 sm:col-span-2">
+                                            <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wide mb-1.5">Shift *</label>
                                             <div className="flex gap-2">
                                                 <label className="flex-1">
                                                     <input type="radio" name="shift" value="Day" defaultChecked className="hidden peer" />
-                                                    <div className="text-center p-3 border-2 border-gray-100 rounded-xl text-[10px] font-black uppercase text-gray-400 peer-checked:border-blue-600 peer-checked:bg-blue-50 peer-checked:text-blue-600 cursor-pointer transition-all">Day</div>
+                                                    <div className="text-center p-2.5 sm:p-3 border-2 border-gray-100 rounded-xl text-[10px] font-bold uppercase text-gray-400 peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:text-blue-600 cursor-pointer transition-all">Day</div>
                                                 </label>
                                                 <label className="flex-1">
                                                     <input type="radio" name="shift" value="Night" className="hidden peer" />
-                                                    <div className="text-center p-3 border-2 border-gray-100 rounded-xl text-[10px] font-black uppercase text-gray-400 peer-checked:border-blue-600 peer-checked:bg-blue-50 peer-checked:text-blue-600 cursor-pointer transition-all">Night</div>
+                                                    <div className="text-center p-2.5 sm:p-3 border-2 border-gray-100 rounded-xl text-[10px] font-bold uppercase text-gray-400 peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:text-blue-600 cursor-pointer transition-all">Night</div>
                                                 </label>
                                             </div>
                                         </div>
@@ -285,25 +346,25 @@ const ManpowerManagement = () => {
                                 ) : (
                                     <>
                                         <div>
-                                            <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Domain / Dept *</label>
-                                            <input name="department" type="text" required placeholder="Ex: Civil Engineering" className="w-full border-2 border-gray-100 rounded-2xl px-4 py-3 text-sm font-bold focus:border-blue-500 outline-none" />
+                                            <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wide mb-1.5">Department *</label>
+                                            <input name="department" type="text" required placeholder="Civil Engineering" className="w-full border-2 border-gray-100 rounded-xl sm:rounded-2xl px-3 sm:px-4 py-2.5 sm:py-3 text-sm font-semibold focus:border-blue-500 outline-none" />
                                         </div>
                                         <div>
-                                            <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Exp (Total Yrs) *</label>
-                                            <input name="experience" type="number" required placeholder="Ex: 8" className="w-full border-2 border-gray-100 rounded-2xl px-4 py-3 text-sm font-bold focus:border-blue-500 outline-none" />
+                                            <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wide mb-1.5">Experience (Yrs) *</label>
+                                            <input name="experience" type="number" required placeholder="8" className="w-full border-2 border-gray-100 rounded-xl sm:rounded-2xl px-3 sm:px-4 py-2.5 sm:py-3 text-sm font-semibold focus:border-blue-500 outline-none" />
                                         </div>
                                     </>
                                 )}
                                 <div>
-                                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Joining Date *</label>
-                                    <input name="doj" type="date" required className="w-full border-2 border-gray-100 rounded-2xl px-4 py-3 text-sm font-bold focus:border-blue-500 outline-none bg-white" />
+                                    <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wide mb-1.5">Joining Date *</label>
+                                    <input name="doj" type="date" required className="w-full border-2 border-gray-100 rounded-xl sm:rounded-2xl px-3 sm:px-4 py-2.5 sm:py-3 text-sm font-semibold focus:border-blue-500 outline-none bg-white" />
                                 </div>
                             </div>
 
-                            <div className="flex gap-4 pt-6 border-t mt-4 sticky bottom-0 bg-white">
-                                <button type="button" onClick={() => setIsModalOpen(false)} className="grow py-4 rounded-3xl font-black text-xs text-gray-400 uppercase tracking-widest hover:bg-gray-50 transition-colors">Discard</button>
-                                <button type="submit" className="grow py-4 rounded-3xl font-black text-xs text-white shadow-2xl transition-all active:scale-95 uppercase tracking-widest bg-blue-500 shadow-blue-100 hover:bg-blue-600">
-                                    Complete Onboarding
+                            <div className="flex gap-3 pt-4 sm:pt-6 border-t mt-2 sm:mt-4 sticky bottom-0 bg-white safe-area-bottom">
+                                <button type="button" onClick={() => setIsModalOpen(false)} className="flex-1 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-xs text-gray-400 uppercase hover:bg-gray-50 transition-colors">Cancel</button>
+                                <button type="submit" className="flex-1 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-xs text-white shadow-lg transition-all active:scale-95 uppercase bg-blue-500 hover:bg-blue-600">
+                                    Add {modalRole}
                                 </button>
                             </div>
                         </form>

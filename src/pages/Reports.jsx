@@ -27,19 +27,21 @@ const Reports = () => {
     ];
 
     return (
-        <div className="p-8 max-w-7xl mx-auto min-h-screen animate-in fade-in duration-500">
+        <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto min-h-screen animate-in fade-in duration-500">
             {/* Header */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
-                <div>
-                    <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Executive Reports</h1>
-                    <p className="text-gray-500 mt-1">Comprehensive analysis and automated reporting</p>
-                </div>
-                <div className="flex bg-white rounded-xl shadow-sm border border-gray-200 p-1">
+            <div className="mb-4 sm:mb-6 lg:mb-10">
+                <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 tracking-tight">Executive Reports</h1>
+                <p className="text-gray-500 mt-0.5 sm:mt-1 text-sm">Comprehensive analysis and automated reporting</p>
+            </div>
+            
+            {/* Date Range Tabs - Horizontal scroll on mobile */}
+            <div className="overflow-x-auto scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0 mb-4 sm:mb-6 lg:mb-8">
+                <div className="flex bg-white rounded-xl shadow-sm border border-gray-200 p-1 w-fit min-w-full sm:min-w-0 sm:w-auto">
                     {['This Week', 'This Month', 'This Quarter', 'Last Year'].map((range) => (
                         <button
                             key={range}
                             onClick={() => setDateRange(range)}
-                            className={`px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${dateRange === range
+                            className={`px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg text-[10px] sm:text-xs font-bold uppercase tracking-wide sm:tracking-wider transition-all whitespace-nowrap flex-1 sm:flex-none ${dateRange === range
                                     ? 'bg-blue-600 text-white shadow-md'
                                     : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
                                 }`}
@@ -50,32 +52,32 @@ const Reports = () => {
                 </div>
             </div>
 
-            {/* KPI Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            {/* KPI Grid - 2 columns on mobile */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mb-4 sm:mb-6 lg:mb-8">
                 {kpiStats.map((stat, idx) => (
-                    <div key={idx} className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm hover:shadow-md transition-all group">
-                        <div className="flex justify-between items-start mb-4">
-                            <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-xl bg-${stat.color}-50 text-${stat.color}-600 group-hover:scale-110 transition-transform`}>
+                    <div key={idx} className="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-4 lg:p-6 border border-gray-200 shadow-sm hover:shadow-md transition-all group">
+                        <div className="flex justify-between items-start mb-2 sm:mb-4">
+                            <div className={`w-9 h-9 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-lg sm:rounded-xl flex items-center justify-center text-base sm:text-lg lg:text-xl bg-${stat.color}-50 text-${stat.color}-600 group-hover:scale-110 transition-transform`}>
                                 <i className={stat.icon}></i>
                             </div>
-                            <span className={`text-xs font-bold px-2 py-1 rounded-full ${stat.trend === 'up' ? 'bg-green-50 text-green-600' :
+                            <span className={`text-[9px] sm:text-[10px] lg:text-xs font-bold px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full ${stat.trend === 'up' ? 'bg-green-50 text-green-600' :
                                     stat.trend === 'down' ? 'bg-red-50 text-red-600' : 'bg-gray-100 text-gray-500'
                                 }`}>
-                                <i className={`fas fa-arrow-${stat.trend === 'neutral' ? 'right' : stat.trend} mr-1`}></i>
+                                <i className={`fas fa-arrow-${stat.trend === 'neutral' ? 'right' : stat.trend} mr-0.5 sm:mr-1`}></i>
                                 {stat.change}
                             </span>
                         </div>
-                        <h3 className="text-3xl font-black text-gray-900 mb-1">{stat.value}</h3>
-                        <p className="text-sm font-medium text-gray-500">{stat.label}</p>
+                        <h3 className="text-lg sm:text-xl lg:text-3xl font-black text-gray-900 mb-0.5 sm:mb-1">{stat.value}</h3>
+                        <p className="text-[10px] sm:text-xs lg:text-sm font-medium text-gray-500 leading-tight">{stat.label}</p>
                     </div>
                 ))}
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-4 sm:mb-6 lg:mb-8">
                 {/* Visual Chart Placeholder - Financial Distribution */}
-                <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 lg:col-span-1">
-                    <h3 className="text-lg font-bold text-gray-900 mb-6">Budget Distribution</h3>
-                    <div className="flex flex-col gap-6">
+                <div className="bg-white rounded-xl sm:rounded-2xl border border-gray-200 shadow-sm p-4 sm:p-6 lg:col-span-1">
+                    <h3 className="text-sm sm:text-base lg:text-lg font-bold text-gray-900 mb-4 sm:mb-6">Budget Distribution</h3>
+                    <div className="flex flex-col gap-4 sm:gap-6">
                         {/* Simple visual representation of budget breakdown */}
                         <div>
                             <div className="flex justify-between text-xs font-bold uppercase text-gray-500 mb-2">
@@ -115,18 +117,43 @@ const Reports = () => {
                         </div>
                     </div>
 
-                    <button className="w-full mt-8 py-3 rounded-xl border border-blue-100 text-blue-600 bg-blue-50 hover:bg-blue-100 font-bold text-xs uppercase tracking-wider transition-all">
+                    <button className="w-full mt-4 sm:mt-6 lg:mt-8 py-2.5 sm:py-3 rounded-xl border border-blue-100 text-blue-600 bg-blue-50 hover:bg-blue-100 font-bold text-[10px] sm:text-xs uppercase tracking-wider transition-all">
                         View Detailed Financials
                     </button>
                 </div>
 
                 {/* Project Health Table */}
-                <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 lg:col-span-2">
-                    <div className="flex justify-between items-center mb-6">
-                        <h3 className="text-lg font-bold text-gray-900">Project Health Monitoring</h3>
-                        <button className="text-blue-600 hover:text-blue-800 text-xs font-bold uppercase">View All Projects</button>
+                <div className="bg-white rounded-xl sm:rounded-2xl border border-gray-200 shadow-sm p-4 sm:p-6 lg:col-span-2">
+                    <div className="flex justify-between items-center mb-4 sm:mb-6">
+                        <h3 className="text-sm sm:text-base lg:text-lg font-bold text-gray-900">Project Health</h3>
+                        <button className="text-blue-600 hover:text-blue-800 text-[10px] sm:text-xs font-bold uppercase">View All</button>
                     </div>
-                    <div className="overflow-x-auto">
+                    
+                    {/* Mobile Card View */}
+                    <div className="sm:hidden space-y-3">
+                        {projectHealth.map((proj, idx) => (
+                            <div key={idx} className="bg-gray-50 rounded-xl p-3">
+                                <div className="flex justify-between items-start mb-2">
+                                    <p className="text-xs font-bold text-gray-800 leading-tight flex-1 pr-2">{proj.name}</p>
+                                    <span className={`px-2 py-0.5 rounded-lg text-[9px] font-bold uppercase flex-shrink-0 ${proj.status === 'Completed' ? 'bg-green-100 text-green-700' :
+                                            proj.status === 'Delayed' ? 'bg-red-100 text-red-700' : 'bg-blue-50 text-blue-600'
+                                        }`}>
+                                        {proj.status}
+                                    </span>
+                                </div>
+                                <div className="flex items-center gap-2 mb-2">
+                                    <div className="flex-1 bg-gray-200 rounded-full h-1.5">
+                                        <div className={`h-full rounded-full ${proj.progress > 80 ? 'bg-green-500' : proj.progress < 50 ? 'bg-red-500' : 'bg-blue-500'}`} style={{ width: `${proj.progress}%` }}></div>
+                                    </div>
+                                    <span className="text-[10px] font-bold text-gray-500">{proj.progress}%</span>
+                                </div>
+                                <p className="text-[10px] text-gray-400">Budget: <span className="font-semibold text-gray-600">{proj.budget}%</span> used</p>
+                            </div>
+                        ))}
+                    </div>
+                    
+                    {/* Desktop Table View */}
+                    <div className="hidden sm:block overflow-x-auto">
                         <table className="w-full text-left">
                             <thead>
                                 <tr className="text-xs text-gray-400 font-bold uppercase tracking-wider border-b border-gray-100">
@@ -172,16 +199,37 @@ const Reports = () => {
             </div>
 
             {/* Generated Reports List */}
-            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-                <div className="p-6 border-b border-gray-100 flex justify-between items-center">
-                    <h3 className="text-lg font-bold text-gray-900">Available Reports</h3>
-                    <div className="flex gap-2">
-                        <button className="px-4 py-2 bg-gray-900 text-white rounded-lg text-xs font-bold uppercase tracking-wider hover:bg-gray-800 transition-all shadow-lg shadow-gray-900/20">
-                            <i className="fas fa-plus mr-2"></i> Generate New
-                        </button>
-                    </div>
+            <div className="bg-white rounded-xl sm:rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+                <div className="p-4 sm:p-6 border-b border-gray-100 flex justify-between items-center">
+                    <h3 className="text-sm sm:text-base lg:text-lg font-bold text-gray-900">Available Reports</h3>
+                    <button className="px-3 sm:px-4 py-2 bg-gray-900 text-white rounded-lg text-[10px] sm:text-xs font-bold uppercase tracking-wide sm:tracking-wider hover:bg-gray-800 transition-all shadow-lg shadow-gray-900/20">
+                        <i className="fas fa-plus mr-1 sm:mr-2"></i><span className="hidden xs:inline">Generate</span><span className="xs:hidden">New</span>
+                    </button>
                 </div>
-                <div className="overflow-x-auto">
+                
+                {/* Mobile Card View for Reports */}
+                <div className="sm:hidden divide-y divide-gray-100">
+                    {generatedReports.map((rpt) => (
+                        <div key={rpt.id} className="p-4 flex items-center gap-3">
+                            <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-lg flex-shrink-0 ${rpt.format === 'PDF' ? 'bg-red-50 text-red-500' : 'bg-green-50 text-green-500'}`}>
+                                <i className={`fas ${rpt.format === 'PDF' ? 'fa-file-pdf' : 'fa-file-excel'}`}></i>
+                            </div>
+                            <div className="flex-1 min-w-0">
+                                <p className="text-xs font-bold text-gray-900 truncate">{rpt.name}</p>
+                                <div className="flex items-center gap-2 mt-0.5">
+                                    <span className="text-[10px] bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded font-semibold">{rpt.type}</span>
+                                    <span className="text-[10px] text-gray-400">{rpt.date}</span>
+                                </div>
+                            </div>
+                            <button className="text-gray-400 hover:text-blue-600 p-2">
+                                <i className="fas fa-download"></i>
+                            </button>
+                        </div>
+                    ))}
+                </div>
+                
+                {/* Desktop Table View */}
+                <div className="hidden sm:block overflow-x-auto">
                     <table className="w-full text-left">
                         <thead className="bg-gray-50">
                             <tr>

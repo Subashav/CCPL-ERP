@@ -6,7 +6,9 @@ export default {
   ],
   theme: {
     extend: {
-
+      screens: {
+        'xs': '480px',
+      },
       fontFamily: {
         sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
       },
@@ -16,10 +18,10 @@ export default {
       },
       colors: {
         primary: {
-          DEFAULT: '#50C878', // Emerald Green (User Requested)
-          dark: '#0B6E4F',    // Royal Amethyst (Darker Teal for hover)
-          light: '#82E0AA',   // Lighter Emerald
-          pale: '#E8F8F5',    // Very light mint for backgrounds
+          DEFAULT: '#1E40AF', // Dark Blue (Royal Blue)
+          dark: '#1E3A8A',    // Darker Blue for hover
+          light: '#3B82F6',   // Lighter Blue
+          pale: '#DBEAFE',    // Very light blue for backgrounds
         },
         navy: {
           DEFAULT: '#1E293B', // Slate 800 (Neutral Dark Blue-Grey) - Less "Green"
@@ -31,7 +33,7 @@ export default {
           main: '#111827',
           light: '#64748b',
         },
-        success: '#50C878', // Emerald Green
+        success: '#22C55E', // Green
         warning: '#F59E0B',
         error: '#EF4444',
       },

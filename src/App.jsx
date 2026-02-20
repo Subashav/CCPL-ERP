@@ -14,11 +14,20 @@ import UserManagement from './pages/UserManagement';
 import Reports from './pages/Reports';
 import Documents from './pages/Documents';
 
+// New Feature Pages
+import Labour from './pages/Labour';
+import Procurement from './pages/Procurement';
+import Billing from './pages/Billing';
+import Expenses from './pages/Expenses';
+import Settings from './pages/Settings';
+
 import EngineerLayout from './components/EngineerLayout';
 import EngineerDashboard from './pages/engineer/Dashboard';
 import SuperAdminDashboard from './pages/SuperAdminDashboard';
 import AssetsProvided from './pages/engineer/AssetsProvided';
 import Attendance from './pages/engineer/Attendance';
+import DailyUpdates from './pages/engineer/DailyUpdates';
+import SitePhotos from './pages/engineer/SitePhotos';
 
 import AdminAssetRequests from './pages/AdminAssetRequests';
 import AdminAttendanceRecords from './pages/AdminAttendanceRecords';
@@ -62,16 +71,18 @@ function App() {
           <Route path="/vendors/new-purchase" element={<CreatePurchase />} />
           <Route path="/vendors/:id" element={<VendorDetails />} />
 
-          {/* PLACEHOLDER ROUTES */}
-          <Route path="/labour" element={<Placeholder title="Labour Management" icon="fas fa-users" />} />
-          <Route path="/procurement" element={<Placeholder title="Procurement" icon="fas fa-shopping-cart" />} />
-          <Route path="/billing" element={<Placeholder title="Billing" icon="fas fa-file-invoice-dollar" />} />
-          <Route path="/expenses" element={<Placeholder title="Expenses" icon="fas fa-receipt" />} />
+          {/* New Feature Routes */}
+          <Route path="/labour" element={<Labour />} />
+          <Route path="/procurement" element={<Procurement />} />
+          <Route path="/billing" element={<Billing />} />
+          <Route path="/expenses" element={<Expenses />} />
+          <Route path="/settings" element={<Settings />} />
+          
+          {/* Reports & Documents */}
           <Route path="/reports" element={<Reports />} />
           <Route path="/documents" element={<Documents />} />
           <Route path="/users" element={<UserManagement />} />
           <Route path="/notifications" element={<Placeholder title="Notifications" icon="fas fa-bell" />} />
-          <Route path="/settings" element={<Placeholder title="Settings" icon="fas fa-cog" />} />
         </Route>
 
         {/* SITE ENGINEER ROUTES */}
@@ -82,11 +93,11 @@ function App() {
           <Route path="assets-provided" element={<AssetsProvided />} />
           <Route path="manpower" element={<EngineerManpower />} />
           <Route path="attendance-log" element={<Attendance />} />
-          <Route path="updates" element={<Placeholder title="Daily Progress Update" icon="fas fa-edit" />} />
-          <Route path="photos" element={<Placeholder title="Upload Site Photos" icon="fas fa-camera" />} />
+          <Route path="updates" element={<DailyUpdates />} />
+          <Route path="photos" element={<SitePhotos />} />
           <Route path="assets" element={<Assets />} />
           <Route path="stock" element={<Inventory />} />
-          <Route path="documents" element={<Placeholder title="Site Documents" icon="fas fa-file-alt" />} />
+          <Route path="documents" element={<Documents />} />
           <Route path="notifications" element={<Placeholder title="Notifications" icon="fas fa-bell" />} />
           <Route path="tickets" element={<Tickets />} />
         </Route>

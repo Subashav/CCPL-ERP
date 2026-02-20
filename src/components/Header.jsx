@@ -44,18 +44,18 @@ const Header = ({ onToggleSidebar }) => {
     return (
         <header className="header">
             <div className="header-left">
-                <button className="sidebar-toggle" onClick={onToggleSidebar}>
-                    <i className="fas fa-bars"></i>
+                <button className="sidebar-toggle" onClick={onToggleSidebar} aria-label="Toggle sidebar">
+                    <i className="fas fa-bars text-lg"></i>
                 </button>
                 <button
                     onClick={() => navigate('/login')}
-                    className="flex items-center gap-2 bg-gray-100/50 hover:bg-gray-200 text-navy-900 px-3 py-1.5 rounded-lg ml-3 transition-all duration-200 border border-gray-200/50"
+                    className="flex items-center gap-1 sm:gap-2 bg-gray-100/50 hover:bg-gray-200 text-navy-900 px-2 sm:px-3 py-1.5 rounded-lg ml-1 sm:ml-3 transition-all duration-200 border border-gray-200/50"
                     title="Go to Landing Page"
                 >
-                    <i className="fas fa-home text-primary"></i>
+                    <i className="fas fa-home text-primary text-sm"></i>
                     <span className="hidden sm:inline font-semibold text-xs tracking-wider uppercase">Home</span>
                 </button>
-                <div className="search-bar hidden md:flex items-center bg-gray-100 rounded-lg px-3 py-1.5 ml-4">
+                <div className="search-bar hidden lg:flex items-center bg-gray-100 rounded-lg px-3 py-1.5 ml-4">
                     <i className="fas fa-search text-gray-400 mr-2"></i>
                     <input
                         type="text"
@@ -67,25 +67,26 @@ const Header = ({ onToggleSidebar }) => {
 
             <div className="header-right">
                 <div className="notifications">
-                    <button className="notification-btn">
-                        <i className="fas fa-bell"></i>
+                    <button className="notification-btn" aria-label="Notifications">
+                        <i className="fas fa-bell text-sm sm:text-base"></i>
                         <span className="notification-badge">3</span>
                     </button>
                 </div>
 
-                <div className="user-menu">
+                <div className="user-menu relative">
                     <button
                         className="user-menu-btn"
                         onClick={() => setShowUserDropdown(!showUserDropdown)}
+                        aria-label="User menu"
                     >
-                        <div className={`user-avatar flex items-center justify-center font-bold text-white rounded-full w-8 h-8 ${getAvatarColor(displayUser.role)}`}>
+                        <div className={`user-avatar flex items-center justify-center font-bold text-white rounded-full w-7 h-7 sm:w-8 sm:h-8 text-xs sm:text-sm ${getAvatarColor(displayUser.role)}`}>
                             {avatarInitials}
                         </div>
                         <div className="text-left hidden md:block">
                             <div className="user-name text-sm font-semibold text-gray-800">{displayUser.name}</div>
                             <div className="user-role text-xs text-gray-500">{roleLabel}</div>
                         </div>
-                        <i className="fas fa-chevron-down text-gray-400 text-xs ml-2"></i>
+                        <i className="fas fa-chevron-down text-gray-400 text-xs ml-1 sm:ml-2 hidden sm:inline"></i>
                     </button>
 
                     {showUserDropdown && (

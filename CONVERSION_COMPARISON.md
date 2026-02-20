@@ -311,7 +311,7 @@ export default Login;
 1. **Login Card**
    - White background
    - Rounded corners (12px)
-   - Drop shadow
+   - Drop shadow  
    - Slide-up animation
 
 2. **Logo Section**

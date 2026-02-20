@@ -106,144 +106,212 @@ const Projects = () => {
         <button
             type="button"
             onClick={() => setActiveTab(id)}
-            className={`flex items-center gap-2 px-4 py-3 border-b-2 transition-colors text-sm font-medium ${activeTab === id
+            className={`flex flex-col sm:flex-row items-center gap-0.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-3 border-b-2 transition-colors whitespace-nowrap min-w-[50px] sm:min-w-0 ${activeTab === id
                 ? 'border-blue-600 text-blue-600 bg-blue-50'
                 : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
                 }`}
         >
-            <i className={icon}></i>
-            {label}
+            <i className={`${icon} text-base sm:text-sm`}></i>
+            <span className="text-[9px] sm:text-sm font-medium">{label}</span>
         </button>
     );
 
     return (
         <>
-            {/* (Keeping existing Header & Table code identical to previous version...) */}
-            <div className="modern-page-header bg-slate-800 text-white p-8 rounded-xl shadow-lg mb-8 relative overflow-hidden">
-                <div className="header-content relative z-10">
-                    <div className="flex justify-between items-center mb-6">
-                        <div className="flex items-center gap-4">
-                            <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-lg flex items-center justify-center text-3xl border border-white/10">
-                                <i className="fas fa-building-columns"></i>
-                            </div>
-                            <div>
-                                <h1 className="text-3xl font-bold mb-1">
-                                    {isEngineer ? 'My Assigned Projects' : 'Project Hub'}
-                                </h1>
-                                <p className="text-lg opacity-80">
-                                    {isEngineer ? 'Projects assigned to you for execution' : 'Comprehensive Construction Project Management Center'}
-                                </p>
-                            </div>
+            {/* Mobile-First Hero Header */}
+            <div className="bg-gradient-to-br from-slate-800 via-slate-900 to-slate-800 text-white p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl shadow-2xl mb-4 sm:mb-6 md:mb-8 relative overflow-hidden">
+                {/* Decorative elements */}
+                <div className="absolute top-0 right-0 w-32 h-32 sm:w-48 sm:h-48 bg-blue-500/10 rounded-full blur-3xl"></div>
+                <div className="absolute bottom-0 left-0 w-24 h-24 sm:w-36 sm:h-36 bg-emerald-500/10 rounded-full blur-3xl"></div>
+                
+                <div className="relative z-10">
+                    {/* Top row with icon and actions */}
+                    <div className="flex justify-between items-start mb-4 sm:mb-6">
+                        <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl flex items-center justify-center text-xl sm:text-2xl md:text-3xl border border-white/20 shadow-lg">
+                            <i className="fas fa-building-columns"></i>
                         </div>
-                        <div className="flex gap-3">
-                            <button className="btn bg-white/5 backdrop-blur-sm border border-white/20 text-white hover:bg-white/10">
-                                <i className="fas fa-download"></i>
-                                <span>Export Data</span>
+                        <div className="flex gap-2">
+                            <button className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center hover:bg-white/20 transition-all">
+                                <i className="fas fa-download text-sm sm:text-base"></i>
                             </button>
                             {!isEngineer && (
                                 <button
                                     onClick={() => setShowModal(true)}
-                                    className="btn bg-[#F5F5F5] text-slate-900 hover:bg-white hover:shadow-lg transform hover:-translate-y-0.5 transition-all border-none font-bold"
+                                    className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-blue-500 flex items-center justify-center hover:bg-blue-400 transition-all shadow-lg shadow-blue-500/30"
                                 >
-                                    <i className="fas fa-plus-circle text-slate-800"></i>
-                                    <span>Create New Project</span>
+                                    <i className="fas fa-plus text-sm sm:text-base"></i>
                                 </button>
                             )}
                         </div>
                     </div>
-                </div>
-            </div>
+                    
+                    {/* Title section */}
+                    <div className="space-y-1 sm:space-y-2">
+                        <h1 className="text-xl sm:text-2xl md:text-3xl font-black tracking-tight">
+                            {isEngineer ? 'My Projects' : 'Project Hub'}
+                        </h1>
+                        <p className="text-sm sm:text-base text-white/70 font-medium">
+                            {isEngineer ? 'Your assigned projects' : 'Construction Management'}
+                        </p>
+                    </div>
 
-            <div className="card">
-                <div className="card-header">
-                    <h3 className="card-title">All Projects</h3>
-                </div>
-                <div className="card-body p-0">
-                    <div className="table-container">
-                        <table className="table w-full">
-                            <thead>
-                                <tr>
-                                    <th>Project ID</th>
-                                    <th>Name</th>
-                                    <th>Manager</th>
-                                    <th>Status</th>
-                                    <th>Progress</th>
-                                    <th>Budget</th>
-                                    <th>Due Date</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {displayedProjects.map((project) => (
-                                    <tr key={project.id} className="hover:bg-gray-50">
-                                        <td className="font-medium text-sm">{project.id}</td>
-                                        <td className="font-medium text-gray-800">{project.name}</td>
-                                        <td className="text-gray-600">{project.manager}</td>
-                                        <td>
-                                            <span className={`badge ${project.status === 'active' ? 'badge-success' :
-                                                project.status === 'planning' ? 'badge-primary' :
-                                                    project.status === 'on-hold' ? 'badge-warning' : 'badge-secondary'
-                                                }`}>
-                                                {project.status.replace('-', ' ')}
-                                            </span>
-                                        </td>
-                                        <td className="w-1/6">
-                                            <div className="flex items-center gap-2">
-                                                <div className="w-full bg-gray-200 rounded-full h-2">
-                                                    <div
-                                                        className={`h-2 rounded-full ${project.progress > 75 ? 'bg-green-500' :
-                                                            project.progress > 40 ? 'bg-blue-500' : 'bg-orange-500'
-                                                            }`}
-                                                        style={{ width: `${project.progress}%` }}
-                                                    ></div>
-                                                </div>
-                                                <span className="text-xs font-medium">{project.progress}%</span>
-                                            </div>
-                                        </td>
-                                        <td className="text-gray-700">{project.budget}</td>
-                                        <td className="text-gray-600">{project.dueDate}</td>
-                                        <td>
-                                            <div className="flex gap-2">
-                                                <button className="btn btn-sm btn-outline text-blue-600 border-blue-200 hover:bg-blue-50">
-                                                    <i className="fas fa-eye"></i>
-                                                </button>
-                                                <button className="btn btn-sm btn-outline text-gray-600 border-gray-200 hover:bg-gray-50">
-                                                    <i className="fas fa-edit"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                    {/* Quick stats pills */}
+                    <div className="flex flex-wrap gap-2 mt-4 sm:mt-6">
+                        <div className="bg-white/10 backdrop-blur-md px-3 py-1.5 sm:px-4 sm:py-2 rounded-full border border-white/20 flex items-center gap-2">
+                            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            <span className="text-xs sm:text-sm font-semibold">{displayedProjects.filter(p => p.status === 'active').length} Active</span>
+                        </div>
+                        <div className="bg-white/10 backdrop-blur-md px-3 py-1.5 sm:px-4 sm:py-2 rounded-full border border-white/20 flex items-center gap-2">
+                            <span className="w-2 h-2 rounded-full bg-blue-400"></span>
+                            <span className="text-xs sm:text-sm font-semibold">{displayedProjects.filter(p => p.status === 'planning').length} Planning</span>
+                        </div>
+                        <div className="bg-white/10 backdrop-blur-md px-3 py-1.5 sm:px-4 sm:py-2 rounded-full border border-white/20">
+                            <span className="text-xs sm:text-sm font-semibold">{displayedProjects.length} Total</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            {/* --- CREATE PROJECT MODAL --- */}
-            {showModal && (
-                <div className="fixed inset-0 z-[2000] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-in">
-                    <div className="bg-white rounded-xl shadow-2xl w-full max-w-6xl max-h-[95vh] flex flex-col">
-                        {/* Header */}
-                        <div className="flex justify-between items-center px-6 py-4 border-b border-gray-200">
-                            <h3 className="text-lg font-bold text-gray-800">Create Comprehensive Project</h3>
-                            <button onClick={() => setShowModal(false)} className="text-gray-400 hover:text-gray-600 hover:bg-gray-100 p-2 rounded-full transition-all">
-                                <i className="fas fa-times text-xl"></i>
+            {/* Search & Filter Bar - Mobile App Style */}
+            <div className="flex gap-2 mb-4 sm:mb-6">
+                <div className="flex-1 relative">
+                    <i className="fas fa-search absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <input 
+                        type="text" 
+                        placeholder="Search projects..." 
+                        className="w-full pl-9 sm:pl-11 pr-4 py-2.5 sm:py-3 bg-white border border-slate-200 rounded-xl sm:rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-sm"
+                    />
+                </div>
+                <button className="w-11 h-11 sm:w-12 sm:h-12 bg-white border border-slate-200 rounded-xl sm:rounded-2xl flex items-center justify-center hover:bg-slate-50 transition-all shadow-sm">
+                    <i className="fas fa-sliders-h text-slate-600"></i>
+                </button>
+            </div>
+
+            {/* Section Title */}
+            <div className="flex justify-between items-center mb-3 sm:mb-4">
+                <h2 className="text-base sm:text-lg font-bold text-slate-800">All Projects</h2>
+                <button className="text-xs sm:text-sm text-blue-600 font-semibold">See All</button>
+            </div>
+
+            {/* Project Cards - Mobile App Style */}
+            <div className="space-y-3 sm:space-y-4">
+                {displayedProjects.map((project) => (
+                    <div 
+                        key={project.id} 
+                        className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-slate-100 shadow-sm hover:shadow-lg transition-all duration-300 active:scale-[0.98] cursor-pointer group"
+                    >
+                        {/* Card Header */}
+                        <div className="flex justify-between items-start mb-3 sm:mb-4">
+                            <div className="flex-1 min-w-0">
+                                <div className="flex items-center gap-2 mb-1">
+                                    <span className="text-[10px] sm:text-xs font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-md">{project.id}</span>
+                                    <span className={`text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded-full uppercase tracking-wide ${
+                                        project.status === 'active' ? 'bg-emerald-100 text-emerald-700' :
+                                        project.status === 'planning' ? 'bg-blue-100 text-blue-700' :
+                                        project.status === 'on-hold' ? 'bg-amber-100 text-amber-700' : 'bg-slate-100 text-slate-600'
+                                    }`}>
+                                        {project.status}
+                                    </span>
+                                </div>
+                                <h3 className="text-sm sm:text-base font-bold text-slate-800 truncate pr-2">{project.name}</h3>
+                            </div>
+                            <button className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-slate-50 flex items-center justify-center hover:bg-blue-50 hover:text-blue-600 transition-all group-hover:bg-blue-500 group-hover:text-white">
+                                <i className="fas fa-chevron-right text-xs sm:text-sm"></i>
                             </button>
                         </div>
 
-                        {/* Tabs */}
-                        <div className="flex border-b border-gray-200 overflow-x-auto bg-gray-50/50 px-2">
-                            {renderTabButton('basic', 'Basic Info', 'fas fa-info-circle')}
-                            {renderTabButton('inventory', 'Inventory & Materials', 'fas fa-truck-loading')}
-                            {renderTabButton('vendors', 'Vendors & Contractors', 'fas fa-handshake')}
-                            {renderTabButton('diagrams', 'Diagrams & Documents', 'fas fa-file-pdf')}
-                            {renderTabButton('tasks', 'Project Tasks', 'fas fa-tasks')}
-                            {renderTabButton('timeline', 'Timeline & Budget', 'fas fa-calendar-alt')}
+                        {/* Progress Bar */}
+                        <div className="mb-3 sm:mb-4">
+                            <div className="flex justify-between items-center mb-1.5 sm:mb-2">
+                                <span className="text-[10px] sm:text-xs font-semibold text-slate-500 uppercase tracking-wide">Progress</span>
+                                <span className="text-xs sm:text-sm font-bold text-slate-800">{project.progress}%</span>
+                            </div>
+                            <div className="h-2 sm:h-2.5 bg-slate-100 rounded-full overflow-hidden">
+                                <div 
+                                    className={`h-full rounded-full transition-all duration-500 ${
+                                        project.progress > 75 ? 'bg-gradient-to-r from-emerald-500 to-emerald-400' :
+                                        project.progress > 40 ? 'bg-gradient-to-r from-blue-600 to-blue-400' : 'bg-gradient-to-r from-amber-500 to-amber-400'
+                                    }`}
+                                    style={{ width: `${project.progress}%` }}
+                                ></div>
+                            </div>
+                        </div>
+
+                        {/* Card Footer - Info Pills */}
+                        <div className="flex flex-wrap gap-2 sm:gap-3">
+                            <div className="flex items-center gap-1.5 text-slate-500">
+                                <i className="fas fa-user-tie text-[10px] sm:text-xs"></i>
+                                <span className="text-[10px] sm:text-xs font-medium truncate max-w-[80px] sm:max-w-none">{project.manager}</span>
+                            </div>
+                            <div className="flex items-center gap-1.5 text-slate-500">
+                                <i className="fas fa-rupee-sign text-[10px] sm:text-xs"></i>
+                                <span className="text-[10px] sm:text-xs font-medium">{project.budget}</span>
+                            </div>
+                            <div className="flex items-center gap-1.5 text-slate-500">
+                                <i className="fas fa-calendar text-[10px] sm:text-xs"></i>
+                                <span className="text-[10px] sm:text-xs font-medium">{project.dueDate}</span>
+                            </div>
+                        </div>
+
+                        {/* Action Buttons - Visible on hover/touch */}
+                        <div className="flex gap-2 mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-slate-100">
+                            <button className="flex-1 py-2 sm:py-2.5 bg-slate-50 hover:bg-slate-100 text-slate-700 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center justify-center gap-2">
+                                <i className="fas fa-eye"></i> View
+                            </button>
+                            <button className="flex-1 py-2 sm:py-2.5 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center justify-center gap-2">
+                                <i className="fas fa-edit"></i> Edit
+                            </button>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            {/* Empty State */}
+            {displayedProjects.length === 0 && (
+                <div className="bg-white rounded-3xl p-8 sm:p-12 text-center border border-slate-100">
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 bg-slate-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i className="fas fa-folder-open text-2xl sm:text-3xl text-slate-400"></i>
+                    </div>
+                    <h3 className="text-lg sm:text-xl font-bold text-slate-800 mb-2">No Projects Found</h3>
+                    <p className="text-sm text-slate-500 mb-4">Get started by creating your first project</p>
+                    {!isEngineer && (
+                        <button 
+                            onClick={() => setShowModal(true)}
+                            className="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/30"
+                        >
+                            <i className="fas fa-plus mr-2"></i> New Project
+                        </button>
+                    )}
+                </div>
+            )}
+
+            {/* --- CREATE PROJECT MODAL --- */}
+            {showModal && (
+                <div className="fixed inset-0 z-[2000] flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm animate-in">
+                    <div className="bg-white rounded-t-3xl sm:rounded-2xl shadow-2xl w-full sm:max-w-2xl md:max-w-4xl lg:max-w-6xl max-h-[85vh] sm:max-h-[95vh] flex flex-col sm:m-4">
+                        {/* Mobile Handle */}
+                        <div className="w-12 h-1.5 bg-gray-300 rounded-full mx-auto mt-2 sm:hidden flex-shrink-0"></div>
+                        
+                        {/* Header */}
+                        <div className="flex justify-between items-center px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200 flex-shrink-0">
+                            <h3 className="text-base sm:text-lg font-bold text-gray-800">New Project</h3>
+                            <button onClick={() => setShowModal(false)} className="text-gray-400 hover:text-gray-600 hover:bg-gray-100 p-2 rounded-full transition-all">
+                                <i className="fas fa-times text-lg sm:text-xl"></i>
+                            </button>
+                        </div>
+
+                        {/* Tabs - Scrollable on mobile */}
+                        <div className="flex border-b border-gray-200 overflow-x-auto bg-gray-50/50 px-2 scrollbar-hide flex-shrink-0">
+                            {renderTabButton('basic', 'Basic', 'fas fa-info-circle')}
+                            {renderTabButton('inventory', 'Materials', 'fas fa-truck-loading')}
+                            {renderTabButton('vendors', 'Vendors', 'fas fa-handshake')}
+                            {renderTabButton('diagrams', 'Docs', 'fas fa-file-pdf')}
+                            {renderTabButton('tasks', 'Tasks', 'fas fa-tasks')}
+                            {renderTabButton('timeline', 'Timeline', 'fas fa-calendar-alt')}
                         </div>
 
                         {/* Body */}
-                        <div className="flex-1 overflow-y-auto p-8 bg-white">
+                        <div className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 bg-white min-h-0">
 
                             {/* 1. Basic Info Tab */}
                             {activeTab === 'basic' && (
@@ -569,10 +637,18 @@ const Projects = () => {
                         </div>
 
                         {/* Footer */}
-                        <div className="px-6 py-4 border-t border-gray-200 bg-gray-50 flex justify-end gap-3 rounded-b-xl">
-                            <button onClick={() => setShowModal(false)} className="px-6 py-2 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-white transition-all bg-white text-sm">Cancel</button>
-                            <button className="px-6 py-2 rounded-lg bg-gray-600 text-white font-medium hover:bg-gray-700 transition-all border border-transparent text-sm">Save as Draft</button>
-                            <button onClick={handleSubmit} className="px-6 py-2 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 shadow-md transition-all border border-transparent text-sm">Create Project</button>
+                        <div className="px-4 sm:px-6 py-3 sm:py-4 border-t border-gray-200 bg-gray-50 rounded-b-xl flex-shrink-0" style={{ paddingBottom: 'max(12px, env(safe-area-inset-bottom))' }}>
+                            <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2 sm:gap-3">
+                                <button onClick={() => setShowModal(false)} className="w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-2 rounded-xl sm:rounded-lg border border-gray-300 text-gray-700 font-semibold hover:bg-white transition-all bg-white text-sm">
+                                    Cancel
+                                </button>
+                                <button className="w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-2 rounded-xl sm:rounded-lg bg-gray-600 text-white font-semibold hover:bg-gray-700 transition-all text-sm">
+                                    Save as Draft
+                                </button>
+                                <button onClick={handleSubmit} className="w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-2 rounded-xl sm:rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 shadow-md transition-all text-sm">
+                                    Create Project
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

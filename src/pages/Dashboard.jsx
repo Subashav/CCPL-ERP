@@ -72,52 +72,41 @@ const AdminDashboard = () => {
     ];
 
     return (
-        <div className="space-y-8 animate-in fade-in duration-500 max-w-[1600px] mx-auto pb-10">
+        <div className="p-4 sm:p-6 lg:p-8 space-y-4 sm:space-y-6 lg:space-y-8 animate-in fade-in duration-500 max-w-[1600px] mx-auto pb-10">
             {/* Header / Banner Section */}
-            <div className="relative w-full bg-gradient-to-r from-blue-700 via-blue-600 to-blue-800 rounded-2xl p-8 mb-8 shadow-lg overflow-hidden text-white">
+            <div className="relative w-full bg-gradient-to-r from-blue-700 via-blue-600 to-blue-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 mb-4 sm:mb-6 shadow-lg overflow-hidden text-white">
                 {/* Background Shapes for visual interest */}
                 <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -mr-16 -mt-16 blur-2xl"></div>
                 <div className="absolute bottom-0 left-0 w-48 h-48 bg-white opacity-5 rounded-full -ml-16 -mb-16 blur-2xl"></div>
 
-                <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+                <div className="relative z-10 flex flex-col gap-4">
                     <div className="space-y-2">
                         <div className="flex items-center gap-2 mb-1">
                             <Building2 size={16} className="text-blue-200" />
                             <span className="text-xs font-bold tracking-wider uppercase text-blue-100 bg-white/10 px-2 py-0.5 rounded">CCPL Construction</span>
                         </div>
-                        <h1 className="text-3xl font-bold tracking-tight">Hello, Admin 👋</h1>
-                        <p className="text-blue-100 font-medium max-w-lg">
+                        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight">Hello, Admin 👋</h1>
+                        <p className="text-blue-100 font-medium max-w-lg text-sm md:text-base">
                             Here's what's happening across your sites today. You have 5 pending issues to resolve.
                         </p>
                     </div>
 
-                    <div className="flex items-center gap-4">
-                        <div className="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-xl flex items-center gap-4 shadow-sm hover:bg-white/15 transition-colors">
+                    <div className="flex flex-wrap items-center gap-3 md:gap-4">
+                        <div className="bg-white/10 backdrop-blur-md border border-white/20 p-3 md:p-4 rounded-xl flex items-center gap-3 md:gap-4 shadow-sm">
                             <div className="text-right">
-                                <p className="text-2xl font-bold leading-none">
+                                <p className="text-lg md:text-2xl font-bold leading-none">
                                     {currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                 </p>
                                 <p className="text-xs text-blue-100 font-medium">
-                                    {currentTime.toLocaleDateString(undefined, { weekday: 'long' })}
+                                    {currentTime.toLocaleDateString(undefined, { weekday: 'short' })}
                                 </p>
                             </div>
-                            <div className="h-8 w-[1px] bg-blue-400/50"></div>
-                            <div>
-                                <Calendar size={24} className="text-blue-200 mb-1 mx-auto" />
+                            <div className="h-8 w-[1px] bg-blue-400/50 hidden sm:block"></div>
+                            <div className="hidden sm:block">
+                                <Calendar size={20} className="text-blue-200 mb-1 mx-auto" />
                                 <span className="text-xs font-bold text-white block">
                                     {currentTime.toLocaleDateString(undefined, { day: 'numeric', month: 'short' })}
                                 </span>
-                            </div>
-                        </div>
-                        <div className="hidden lg:block bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-xl shadow-sm">
-                            <div className="flex items-center gap-2">
-                                <div className="text-yellow-300">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="4" /><path d="M12 2v2" /><path d="M12 20v2" /><path d="m4.93 4.93 1.41 1.41" /><path d="m17.66 17.66 1.41 1.41" /><path d="M2 12h2" /><path d="M20 12h2" /><path d="m6.34 17.66-1.41 1.41" /><path d="m19.07 4.93-1.41 1.41" /></svg>
-                                </div>
-                                <div>
-                                    <p className="text-sm font-bold">28°C</p>
-                                    <p className="text-[10px] text-blue-100">Sunny</p>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -125,20 +114,20 @@ const AdminDashboard = () => {
             </div>
 
             {/* Action Bar (moved out of header) */}
-            <div className="flex justify-between items-center bg-white p-4 rounded-xl border border-slate-100 shadow-sm mb-6">
-                <h2 className="text-lg font-bold text-slate-800">Overview</h2>
-                <div className="flex gap-3">
-                    <button className="flex items-center gap-2 bg-white border border-slate-200 text-slate-600 px-4 py-2 rounded-lg hover:bg-slate-50 hover:border-slate-300 shadow-sm transition-all text-sm font-semibold">
-                        <Calendar size={16} /> Select Period
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 bg-white p-3 sm:p-4 lg:p-6 rounded-xl sm:rounded-2xl border border-slate-100 shadow-sm mb-4 sm:mb-6">
+                <h2 className="text-base sm:text-lg font-bold text-slate-800">Overview</h2>
+                <div className="flex flex-wrap gap-2 sm:gap-3 w-full sm:w-auto">
+                    <button className="flex-1 sm:flex-initial flex items-center justify-center gap-2 bg-white border border-slate-200 text-slate-600 px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg hover:bg-slate-50 hover:border-slate-300 shadow-sm transition-all text-[10px] sm:text-xs font-semibold">
+                        <Calendar size={14} className="sm:w-4 sm:h-4" /> <span className="hidden xs:inline">Select</span> Period
                     </button>
-                    <button className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-600/20 transition-all text-sm font-semibold">
-                        <Plus size={16} /> New Purchase
+                    <button className="flex-1 sm:flex-initial flex items-center justify-center gap-2 bg-blue-600 text-white px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-600/20 transition-all text-[10px] sm:text-xs font-semibold">
+                        <Plus size={14} className="sm:w-4 sm:h-4" /> <span className="hidden xs:inline">New</span> Purchase
                     </button>
                 </div>
             </div>
 
             {/* KPI Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
                 <StatCard
                     title="Active Sites"
                     value="12"
@@ -174,7 +163,7 @@ const AdminDashboard = () => {
             </div>
 
             {/* Charts Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
                 <ChartCard title="Daily Attendance Trend" className="lg:col-span-2">
                     <ResponsiveContainer width="100%" height="100%">
                         <AreaChart data={attendanceData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
@@ -198,30 +187,37 @@ const AdminDashboard = () => {
                 </ChartCard>
 
                 <ChartCard title="Vendor Purchase Split">
-                    <div className="relative w-full h-full flex items-center justify-center">
+                    <div className="relative w-full h-full flex items-center justify-center min-h-[220px] sm:min-h-[280px]">
                         <ResponsiveContainer width="100%" height="100%">
                             <PieChart>
                                 <Pie
                                     data={vendorSplitData}
                                     cx="50%"
-                                    cy="50%"
-                                    innerRadius={60}
-                                    outerRadius={80}
-                                    paddingAngle={5}
+                                    cy="45%"
+                                    innerRadius={45}
+                                    outerRadius={65}
+                                    paddingAngle={3}
                                     dataKey="value"
                                 >
                                     {vendorSplitData.map((entry, index) => (
                                         <Cell key={`cell-${index}`} fill={entry.color} stroke="none" />
                                     ))}
                                 </Pie>
-                                <Tooltip contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }} />
-                                <Legend verticalAlign="bottom" height={36} iconType="circle" />
+                                <Tooltip contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)', fontSize: '12px' }} />
+                                <Legend 
+                                    verticalAlign="bottom" 
+                                    height={50} 
+                                    iconType="circle"
+                                    iconSize={8}
+                                    wrapperStyle={{ fontSize: '11px', paddingTop: '8px' }}
+                                    formatter={(value) => <span className="text-slate-600">{value}</span>}
+                                />
                             </PieChart>
                         </ResponsiveContainer>
-                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none pb-8">
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ paddingBottom: '50px' }}>
                             <div className="text-center">
-                                <span className="text-3xl font-bold text-slate-800">100%</span>
-                                <p className="text-xs text-slate-500 font-medium uppercase tracking-wider">Total</p>
+                                <span className="text-2xl sm:text-3xl font-bold text-slate-800">100%</span>
+                                <p className="text-[10px] sm:text-xs text-slate-500 font-medium uppercase tracking-wider">Total</p>
                             </div>
                         </div>
                     </div>
@@ -229,38 +225,70 @@ const AdminDashboard = () => {
             </div>
 
             {/* Tables Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <DashboardTable
-                    title="Recent Purchases"
-                    columns={purchaseColumns}
-                    data={purchases}
-                    actions={
-                        <button className="text-blue-600 text-sm font-semibold hover:text-blue-700 transition-colors">View All</button>
-                    }
-                />
-
-                <div className="bg-white rounded-xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)] border border-slate-100 overflow-hidden flex flex-col hover:shadow-[0_8px_30px_-4px_rgba(6,81,237,0.12)] transition-shadow duration-300">
-                    <div className="p-6 border-b border-slate-50 flex justify-between items-center bg-white">
-                        <h3 className="text-lg font-bold text-slate-800 tracking-tight">Site Updates</h3>
-                        <button className="text-blue-600 text-sm font-semibold hover:text-blue-700 transition-colors">View All</button>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
+                {/* Mobile Card View */}
+                <div className="sm:hidden bg-white rounded-xl sm:rounded-2xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)] border border-slate-100 overflow-hidden">
+                    <div className="p-3 sm:p-4 lg:p-6 border-b border-slate-50 flex justify-between items-center">
+                        <h3 className="text-sm sm:text-base lg:text-lg font-bold text-slate-800">Recent Purchases</h3>
+                        <button className="text-blue-600 text-[10px] sm:text-xs font-semibold hover:text-blue-700 transition-colors">View All</button>
                     </div>
-                    <div className="divide-y divide-slate-50 overflow-y-auto max-h-[400px]">
+                    <div className="divide-y divide-slate-50">
+                        {purchases.map((purchase) => (
+                            <div key={purchase.id} className="p-3 sm:p-4 hover:bg-slate-50/80 transition-colors">
+                                <div className="flex justify-between items-start mb-2">
+                                    <div>
+                                        <p className="text-xs font-semibold text-slate-800">{purchase.vendor}</p>
+                                        <p className="text-[10px] text-slate-500">{purchase.id}</p>
+                                    </div>
+                                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold ${purchase.status === 'Approved' ? 'bg-green-100 text-green-700' :
+                                        purchase.status === 'Pending' ? 'bg-yellow-100 text-yellow-700' :
+                                            'bg-red-100 text-red-700'
+                                        }`}>
+                                        {purchase.status}
+                                    </span>
+                                </div>
+                                <div className="flex justify-between items-center">
+                                    <span className="text-sm font-bold text-slate-800">{purchase.amount}</span>
+                                    <span className="text-[10px] text-slate-500">{purchase.date}</span>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                {/* Desktop Table View */}
+                <div className="hidden sm:block">
+                    <DashboardTable
+                        title="Recent Purchases"
+                        columns={purchaseColumns}
+                        data={purchases}
+                        actions={
+                            <button className="text-blue-600 text-[10px] sm:text-xs font-semibold hover:text-blue-700 transition-colors">View All</button>
+                        }
+                    />
+                </div>
+
+                <div className="bg-white rounded-xl sm:rounded-2xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)] border border-slate-100 overflow-hidden flex flex-col hover:shadow-[0_8px_30px_-4px_rgba(6,81,237,0.12)] transition-shadow duration-300">
+                    <div className="p-3 sm:p-4 lg:p-6 border-b border-slate-50 flex justify-between items-center bg-white">
+                        <h3 className="text-sm sm:text-base lg:text-lg font-bold text-slate-800 tracking-tight">Site Updates</h3>
+                        <button className="text-blue-600 text-[10px] sm:text-xs font-semibold hover:text-blue-700 transition-colors">View All</button>
+                    </div>
+                    <div className="divide-y divide-slate-50 overflow-y-auto max-h-[300px] sm:max-h-[400px]">
                         {updates.map((update) => (
-                            <div key={update.id} className="p-4 hover:bg-slate-50/80 transition-colors flex gap-4 items-start group">
-                                <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 shadow-sm transition-transform duration-300 group-hover:scale-110 ${update.type === 'progress' ? 'bg-blue-50 text-blue-600' :
+                            <div key={update.id} className="p-3 sm:p-4 hover:bg-slate-50/80 transition-colors flex gap-2 sm:gap-4 items-start group">
+                                <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl flex items-center justify-center shrink-0 shadow-sm transition-transform duration-300 group-hover:scale-110 ${update.type === 'progress' ? 'bg-blue-50 text-blue-600' :
                                     update.type === 'material' ? 'bg-amber-50 text-amber-600' :
                                         'bg-red-50 text-red-600'
                                     }`}>
-                                    {update.type === 'progress' ? <TrendingUp size={20} /> :
-                                        update.type === 'material' ? <ShoppingCart size={20} /> :
-                                            <AlertTriangle size={20} />}
+                                    {update.type === 'progress' ? <TrendingUp size={16} className="sm:w-5 sm:h-5" /> :
+                                        update.type === 'material' ? <ShoppingCart size={16} className="sm:w-5 sm:h-5" /> :
+                                            <AlertTriangle size={16} className="sm:w-5 sm:h-5" />}
                                 </div>
-                                <div>
-                                    <p className="text-sm text-slate-800 font-medium leading-snug">{update.message}</p>
-                                    <div className="flex items-center gap-2 mt-1.5">
-                                        <span className="text-xs font-semibold text-slate-500 px-2 py-0.5 bg-slate-100 rounded-md">{update.site}</span>
-                                        <span className="text-slate-300">•</span>
-                                        <span className="text-xs text-slate-500">{update.engineer}</span>
+                                <div className="min-w-0 flex-1">
+                                    <p className="text-xs sm:text-sm text-slate-800 font-medium leading-snug line-clamp-2">{update.message}</p>
+                                    <div className="flex flex-wrap items-center gap-1 sm:gap-2 mt-1 sm:mt-1.5">
+                                        <span className="text-[10px] sm:text-xs font-semibold text-slate-500 px-1.5 sm:px-2 py-0.5 bg-slate-100 rounded-md truncate max-w-[100px] sm:max-w-none">{update.site}</span>
+                                        <span className="text-slate-300 hidden sm:inline">•</span>
+                                        <span className="text-[10px] sm:text-xs text-slate-500 truncate">{update.engineer}</span>
                                     </div>
                                 </div>
                             </div>
